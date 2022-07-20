@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 col-md-2 col-sm-1">
+        </div>
+        <div class="col-lg-6 col-md-8 col-sm-10">
+            <div class="block">
+                <div class="block-home">
+                    <h4>Forgot Password ! </h4>
+                    <div class="block-log">
+                        <form>
+                            <label for="Email">Email</label><br>
+                            <input type="email" name="Email" placeholder="Email"><br><br>
+                            <input type="radio" name="ST" value="Student">
+                            <label for="Student"><p>Student</p></label>
+                            <input type="radio" name="ST" value="Teacher">
+                            <label for="Teacher"><p>Teacher</p></label><br>
+                        </form>    
+                        <p>
+                            A verification link will be sent to your email.
+                        </p>        
+                    </div>
+                    <button class="btn">Send Link</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-2 col-sm-1">
+        </div>
+    </div>
+</div>
+
+{% endblock %}

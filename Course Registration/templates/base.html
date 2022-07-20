@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <!--title-->
+    <title>RUET Course Registration</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'icons/favicon2.ico' %}">
+
+    <!--meta-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Stylesheet-->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'CSS/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+
+
+</head>
+
+<body>
+
+    <!--header-->
+    <div class="upper">
+        <br>
+        <div class="header">
+            <div class="container">
+                <div class="head">
+
+                    <div class="row">
+                        <div class="col-lg-1 col-sm-2 ins-logo">
+                            <img src="{% static 'PIC/ruet.png' %}" alt="Logo">
+                        </div>
+                        <div class="col-lg-11 col-sm-10 ins-name">
+                            <div class="ver-align">
+                                <h1>Rajshahi University of Engineering & Technology</h1>
+                                <a href="{% url 'CR_Home' %}">
+                                    <h3>Online Course Registration Site</h3>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <br>
+
+        {% block content %}
+
+        {% endblock %}
+
+        <br>
+        <br>
+
+    </div>
+
+
+    <!--footer-->
+    <div class="footer">
+        <hr class="footer-hr1">
+        <div class="container-fluid">
+            <div class="footer-head">
+                <h4>For Any Informations</h4>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-6 details">
+                    <div>
+                        <h6>RUET Contact Information</h6>
+                        <hr class="footer-hr2">
+                        <p>
+                            Registrar<br>Rajshahi University of Engineering & Technology
+                            <br>Kazla, Rajshahi-6204, Bangladesh.<br><br>
+                        </p>
+                        <p><span><img src="{% static 'PIC/fax.png' %}"></span>
+                            <a href="fax:+88 (0721) 750105">
+                                +88 (0721) 750105
+                            </a>
+                        </p>
+                        <p><span><img src="{% static 'PIC/old-typical-phone.png' %}"></span>
+                            <a href="tel:+88721750742">
+                                +88 (721) 750742-3, 751320-1
+                            </a>
+                        </p>
+                        <p><span><img src="{% static 'PIC/email.png' %}"></span>
+                            <a href="https://www.gmail.com" target="_blank">
+                                registrar@ruet.ac.bd
+                            </a>
+                        </p>
+                        <p><span><img src="{% static 'PIC/www.png' %}"></span>
+                            <a href="https://www.ruet.ac.bd" target="_blank">
+                                ruet.ac.bd
+                            </a>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 details">
+                    <div>
+                        <h6>About RUET</h6>
+                        <hr class="footer-hr2">
+                        <p>
+                            Rajshahi University of Engineering & Technology (RUET) is the
+                            prestigious public Engineering University & center of
+                            excellence offers high quality education and research in
+                            the field of engineering and technology.
+                        </p>
+                        <br>
+                        <a href="https://www.ruet.ac.bd/page/history" class="bttn">More Info</a>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12 details">
+                    <div>
+                        <h6>Department Links</h6>
+                        <hr class="footer-hr2">
+                        <table class="table">
+                            <tr>
+                                <td>
+                                    <p><a href="https://www.EEE.ruet.ac.bd">EEE</a></p>
+                                </td>
+                                <td>
+                                    <p><a href="https://www.CSE.ruet.ac.bd">CSE</a></p>
+                                </td>
+                                <td>
+                                    <p><a href="https://www.ETE.ruet.ac.bd">ETE</a></p>
+                                </td>
+                                <td>
+                                    <p><a href="https://www.ECE.ruet.ac.bd">ECE</a></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p><a href="https://www.CE.ruet.ac.bd">CE</a></p>
+                                </td>
+                                <td>
+                                    <p><a href="https://www.URP.ruet.ac.bd">URP</a></p>
+                                </td>
+                                <td>
+                                    <p><a href="https://www.Arch.ruet.ac.bd">Arch</a></p>
+                                </td>
+                                <td>
+                                    <p><a href="https://www.BECM.ruet.ac.bd">BECM</a></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p><a href="https://www.ME.ruet.ac.bd">ME</a></p>
+                                </td>
+                                <td>
+                                    <p><a href="https://www.IPE.ruet.ac.bd">IPE</a></p>
+                                </td>
+                                <td>
+                                    <p><a href="https://www.GCE.ruet.ac.bd">GCE</a></p>
+                                </td>
+                                <td>
+                                    <p><a href="https://www.MTE.ruet.ac.bd">MTE</a></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p><a href="https://www.MSE.ruet.ac.bd">MSE</a></p>
+                                </td>
+                                <td>
+                                    <p><a href="https://www.CFPE.ruet.ac.bd">CFPE</a></p>
+                                </td>
+                                <td>
+                                    <p><a href="https://www.Chem.ruet.ac.bd">Chem</a></p>
+                                </td>
+                                <td>
+                                    <p><a href="https://www.Math.ruet.ac.bd">Math</a></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p></p>
+                                </td>
+                                <td>
+                                    <p><a href="https://www.Phy.ruet.ac.bd">Phy</a></p>
+                                </td>
+                                <td>
+                                    <p><a href="https://www.Hum.ruet.ac.bd">Hum</a></p>
+                                </td>
+                                <td>
+                                    <p></p>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="footer-hr1">
+        <div class="cpr">
+            <p>@AIJ (CSE'18)</p>
+        </div>
+    </div>
+
+   
+
+</body>
+
+
+</html>

@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<div class="container">
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header">
+                <ul class="nav navbar-nav">
+                    <li><a class="navbar-brand" href="{% url 'Stu_Home' %}"><b>{{ S_Details.S_Full_Name }}</b></a></li>
+                </ul>
+
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'Stu_Course' %}">Register Course</a></li>
+                <li><a href="{% url 'Stu_Edit' %}" class="active">Edit Profile</a></li>
+                <li><a href="{% url 'CR_Home' %}">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<br>
+
+<div class="container">
+    <div class="block">
+        <div class="block-home">
+            <h4>Edit Profile</h4>
+            <br>
+
+                      
+            <form action="" method="post">
+                {% csrf_token %}
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-6 left_display">
+                        <div>
+                            <label for="Name">Full Name</label><br>
+                            <input type="text" name="Name" value="{{ S_Details.S_Full_Name }}" required><br><br>    
+                        </div>
+                    </div>
+                    <div class="col-sm-5 left_display">
+                        <div>
+                            <label for="Roll">Roll No</label><br>
+                            <input type="text" name="Roll" value="{{ S_Details.S_Roll }}" required><br><br>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-6 left_display">
+                        <div>
+                            <label for="Department">Department</label><br>
+                            {% for x in Dept %}
+                            {% if x == S_Details.S_Department %}
+                            <input type="text" name="Dept" value="{{ x.D_Name }}" required><br><br>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-sm-5 left_display">
+                        <div>
+                            <label for="Series">Series</label><br>
+                            <input type="text" name="Series" value="{{ S_Details.S_Series }}" required><br><br>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-6 left_display">
+                        <div>
+                            <label for="Section">Section</label><br>
+                            <input type="text" name="Section" value="{{ S_Details.S_Section }}" required><br><br>
+                        </div>
+                    </div>
+                    <div class="col-sm-5 left_display">
+                        <div>
+                            <label for="Registration">Registration No</label><br>
+                            <input type="text" name="Reg_No" value="{{ S_Details.S_Reg_No }}" required><br><br>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-6 left_display">
+                        <div>
+                            <label for="Prev_Earned_C">Previous Earned Credit</label><br>
+                            <input type="text" name="Prev_Earned_C" value="{{ S_Details.S_Prev_Earned_C }}" required><br><br>
+                        </div>
+                    </div>
+                    <div class="col-sm-5 left_display">
+                        <div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn">Save</button>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+{% else %}
+<div class="container">
+    <div class="block">
+        <div class="Denger-block">
+            {% load static %}
+            <img src="{% static 'PIC/denger.jpg' %}">
+            <h2>You are not Authorized </h2>
+            <br>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

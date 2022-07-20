@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<div class="container">
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header">
+                <ul class="nav navbar-nav">
+                    <li><a class="navbar-brand active" href="{% url 'Stu_Home' %}"><b>{{ S_Details.S_Full_Name }}</b></a></li>
+                </ul>
+
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'Stu_Course' %}">Register Course</a></li>
+                <li><a href="{% url 'Stu_Edit' %}">Edit Profile</a></li>
+                <li><a href="{% url 'CR_Home' %}">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<br>
+
+<div class="container">
+    <div class="block">
+        <div class="block-home">
+            <h4>Student Profile</h4>
+            <br>
+
+                      
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-6 left_display">
+                        <div>
+                            <p><b>Full Name: </b>{{ S_Details.S_Full_Name }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-5 left_display">
+                        <div>
+                            <p><b>Roll No: </b>{{ S_Details.S_Roll }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-6 left_display">
+                        <div>
+                            {% for x in Dept %}
+                            {% if x == S_Details.S_Department %}
+                            <p><b>Department: </b>{{ x.D_Name }}</p>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-sm-5 left_display">
+                        <div>
+                            <p><b>Series: </b>{{ S_Details.S_Series }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-6 left_display">
+                        <div>
+                            <p><b>Section: </b>{{ S_Details.S_Section }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-5 left_display">
+                        <div>
+                            <p><b>Registration No: </b>{{ S_Details.S_Reg_No }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-6 left_display">
+                        <div>
+                            <p><b>Previous Earned Credit: </b>{{ S_Details.S_Prev_Earned_C }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-5 left_display">
+                        <div>
+
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+</div>
+
+{% else %}
+<div class="container">
+    <div class="block">
+        <div class="Denger-block">
+            {% load static %}
+            <img src="{% static 'PIC/denger.jpg' %}">
+            <h2>You are not Authorized </h2>
+            <br>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

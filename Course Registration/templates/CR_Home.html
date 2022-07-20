@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 col-md-2 col-sm-1">
+        </div>
+        <div class="col-lg-6 col-md-8 col-sm-10">
+            <div class="block">
+                <div class="block-home">
+                    <h4>Login to your account</h4>
+                    <div class="block-log">
+                        <form action="" method="post">
+                            {% csrf_token %}
+
+                            <label for="Email">Email</label><br>
+                            <input type="email" name="Email" placeholder="Email"><br><br>
+
+                            <label for="Password">Password</label><br>
+                            <input type="password" name="Password" placeholder="Password"><br><br>
+
+                            <input type="radio" name="ST" value="Student" required>
+                            <label for="Student">
+                                <p>Student</p>
+                            </label>
+
+                            <input type="radio" name="ST" value="Teacher" required>
+                            <label for="Teacher">
+                                <p>Teacher</p>
+                            </label><br>
+
+                            <button type="submit" class="btn">Sign In</button>
+                        </form>
+
+                        <a href="{% url 'F_Pass' %}">Forgot Password</a>
+
+                    </div>
+                    <p>
+                        Don't have an account !<a class="btn" href="{% url 'CR_Reg' %}">Sign Up</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-2 col-sm-1">
+        </div>
+    </div>
+</div>
+
+{% endblock %}

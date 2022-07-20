@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br>
+<br>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-2">
+        </div>
+        <div class="col-sm-8">
+            <div class="block">
+                <div class="block-home">
+                    <h4>Registration Form</h4>
+
+
+                    <form action="" method="post">
+                        {% csrf_token %}
+
+                        <div class="block-log">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="Name">Full-Name</label><br>
+                                    <input type="text" name="Name" placeholder="Full-Name" required><br><br>
+                                </div>
+                                <div class="col-md-6">
+                                    <br>
+                                    <input type="radio" name="ST" value="Student" required>
+                                    <label for="Student"><p>Student</p></label>
+
+                                    <input type="radio" name="ST" value="Teacher" required>
+                                    <label for="Teacher"><p>Teacher</p></label><br>
+                                </div>
+                            </div>
+                            <div id="Roll_view" style="display: none;">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="Series">Series</label><br>
+                                        <input type="text" name="Series" placeholder="Series" id="series"><br><br>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="Section">Section</label><br>
+                                        <input type="text" name="Section" placeholder="Section" id="section"><br><br>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="RollNo">Roll No</label><br>
+                                        <input type="text" name="RollNo" placeholder="Roll-No" id="roll"><br><br>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="Reg_Id">Registration No</label><br>
+                                        <input type="text" name="Reg_Id" placeholder="Reg. No" id="reg"><br><br>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="Email">Email</label><br>
+                                    <input type="email" name="Email" placeholder="Email" required><br><br>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="Department">Department</label><br>
+                                    <select id="department" name="Department" required>
+                                        <option value="None" selected disabled>---</option>
+                                        {% for x in Dept_Name %}
+                                            <option value="{{ x.D_Name }}">{{ x.D_Name }}</option>
+                                        {% endfor %}
+                                    </select><br><br>
+                                </div>
+                            </div>
+                            <label for="Password">Password</label><br>
+                            <input type="password" name="Password" placeholder="Password" required><br><br>
+                            <label for="password">Confirm Password</label><br>
+                            <input type="password" name="Cpassword" placeholder="Confirm Password" required><br><br>
+
+                        </div>
+                        <button type="submit" class="btn">Register</button>
+                    </form>
+                    <p>
+
+
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2">
+        </div>
+    </div>
+</div>
+<br>
+
+{% load static %}
+<script src="{% static 'JS/CR_Reg.js' %}"></script>
+
+{% endblock %}
