@@ -62,16 +62,33 @@
                                     <label for="Email">Email</label><br>
                                     <input type="email" name="Email" placeholder="Email" required><br><br>
                                 </div>
+
                                 <div class="col-sm-6">
                                     <label for="Department">Department</label><br>
                                     <select id="department" name="Department" required>
-                                        <option value="None" selected disabled>---</option>
+                                        <option value="None" selected disabled>----</option>
                                         {% for x in Dept_Name %}
                                             <option value="{{ x.D_Name }}">{{ x.D_Name }}</option>
                                         {% endfor %}
                                     </select><br><br>
                                 </div>
                             </div>
+
+                            <div id="T_view" style="display: none;">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label for="Department">Designation</label><br>
+                                        <select id="designation" name="Designation">
+                                            <option value="Not Added" selected>---------</option>
+                                                <option value="Professor">Professor</option>
+                                                <option value="Associate Professor">Associate Professor</option>
+                                                <option value="Assistant Professor">Assistant Professor</option>
+                                                <option value="Lecturer">Lecturer</option>
+                                        </select><br><br>
+                                    </div>
+                                </div>
+                            </div>
+                            
                             <label for="Password">Password</label><br>
                             <input type="password" name="Password" placeholder="Password" required><br><br>
                             <label for="password">Confirm Password</label><br>

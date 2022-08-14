@@ -48,11 +48,7 @@
                     <div class="col-sm-1"></div>
                     <div class="col-sm-6 left_display">
                         <div>
-                            {% for x in Dept %}
-                            {% if x == S_Details.S_Department %}
-                            <p><b>Department: </b>{{ x.D_Name }}</p>
-                            {% endif %}
-                            {% endfor %}
+                            <p><b>Department: </b>{{ S_Details.S_Department.D_Name }}</p>
                         </div>
                     </div>
                     <div class="col-sm-5 left_display">
@@ -102,7 +98,8 @@
         <div class="Denger-block">
             {% load static %}
             <img src="{% static 'PIC/denger.jpg' %}">
-            <h2>You are not Authorized </h2>
+            <h2>You are not Authorized</h2>
+            <h4>Please Contact with the Department if You Have Already Created an Account</h4>
             <br>
         </div>
     </div>

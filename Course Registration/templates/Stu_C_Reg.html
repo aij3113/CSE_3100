@@ -8,9 +8,9 @@
         <div class="container">
             <div class="navbar-header">
                 <ul class="nav navbar-nav">
-                    <li><a class="navbar-brand" href="{% url 'Stu_Home' %}"><b>{{ stu.S_Full_Name }}</b></a></li>
+                    <li><a class="navbar-brand" href="{% url 'Stu_Home' %}"><b>{{ S_Details.S_Full_Name }}</b></a></li>
                 </ul>
-                
+
             </div>
             <ul class="nav navbar-nav">
                 <li><a href="{% url 'Stu_Course' %}" class="active">Register Course</a></li>
@@ -36,7 +36,7 @@
                             <label for="department">Department</label><br>
                             <select id="department" name="Department" onchange="GetSelectedValue();" required>
                                 <option value="None">---</option>
-                                {% for x in dept %}
+                                {% for x in Dept %}
                                 <option value="{{ x.D_Name }}">{{ x.D_Name }}</option>
                                 {% endfor %}
                             </select>
@@ -47,7 +47,7 @@
                         <div>
                             <label for="Year">Year</label><br>
                             <select id="Year" name="Year" onchange="GetSelectedValue();" required>
-                                <option value="None">---</option>
+                                <option value="0">---</option>
                             </select>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                         <div>
                             <label for="Semester">Semester</label><br>
                             <select id="Semester" name="Semester" onchange="GetSelectedValue();" required>
-                                <option value="None">---</option>
+                                <option value="NA">---</option>
                             </select>
                         </div>
                     </div>
@@ -95,15 +95,18 @@
                     </div>
                 </div>
 
-
-                {% for x in courses %}
                 <div class="nrow">
+                    {% for x in courses %}
                     <div class="row">
                         <div class="col-sm-3 left_display">
                             <div>
-                                <p>{{ x.C_Code }}</p>
+                                <input type="checkbox" value="{{ x.C_Code }}" name="C_Codes" onclick="ncount()">
+                                <label>
+                                    <p><b>{{ x.C_Code }}</b></p>
+                                </label>
                             </div>
                         </div>
+
                         <div class="col-sm-6 left_display">
                             <div>
                                 <p>{{ x.C_Title }}</p>
@@ -115,8 +118,8 @@
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
 
             </div>
             {% endif %}
@@ -124,7 +127,7 @@
     </div>
 
     {% load static %}
-    <script src="{% static 'JS/student.js' %}"></script>
+    <script src="{% static 'JS/stu_c_reg.js' %}"></script>
 </div>
 
 {% else %}

@@ -42,8 +42,10 @@
                     </div>
                     <div class="col-sm-5 left_display">
                         <div>
-                            <label for="Roll">Roll No</label><br>
-                            <input type="text" name="Roll" value="{{ S_Details.S_Roll }}" required><br><br>
+                            <label style="color: red;"><b>Roll No</b></label><br>
+                            <select id="roll" name="Roll" required>
+                                <option value="{{ S_Details.S_Roll }}" selected>{{ S_Details.S_Roll }}</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -54,11 +56,7 @@
                     <div class="col-sm-6 left_display">
                         <div>
                             <label for="Department">Department</label><br>
-                            {% for x in Dept %}
-                            {% if x == S_Details.S_Department %}
-                            <input type="text" name="Dept" value="{{ x.D_Name }}" required><br><br>
-                            {% endif %}
-                            {% endfor %}
+                            <input type="text" name="Dept" value="{{ S_Details.S_Department.D_Name }}" required><br><br>
                         </div>
                     </div>
                     <div class="col-sm-5 left_display">

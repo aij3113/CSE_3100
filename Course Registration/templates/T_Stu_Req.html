@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<div class="container">
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header">
+                <ul class="nav navbar-nav">
+                    <li><a class="navbar-brand" href="{% url 'T_Home' %}"><b>{{ T_Details.T_Full_Name }}</b></a></li>
+                </ul>
+
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'T_Home' %}" class="active">Students</a></li>
+                <li><a href="{% url 'T_Assign_C' %}">Assign Semester</a></li>
+                <li><a href="{% url 'T_Edit' %}">Edit Profile</a></li>
+                <li><a href="{% url 'CR_Home' %}">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<br>
+
+<div class="container">
+    <div class="block">
+        <nav class="navbar">
+            <ul class="nav navbar-nav center_display">
+                <li><a href="{% url 'T_Home' %}">All Students</a></li>
+                <li><a href="{% url 'T_Stu_Req' %}" class="active">Pending Requests</a></li>
+            </ul>
+        </nav>
+
+        <div class="block-home">
+            <h4>Students of {{Dept.D_Name}}-{{T_Details.T_Sup_Series}} ({{T_Details.T_Sup_Section}} Section)</h4>
+            <br>
+
+            <form action="" method="post">
+                {% csrf_token %}
+
+                <div class="checkAll left_display">
+                    <input type="checkbox" name="checkAll" onclick="selectUnselectAll()">
+                    <label for="all">Select All&nbsp;</label><label id="nselected"> </label>
+                </div>
+
+                {% for x in S_Details %}
+                {% if x.S_is_active is not True %}
+                <div class="row">
+                    <div class="col-sm-5 left_display">
+                        <div>
+                            <input type="checkbox" value="{{ x.S_Roll }}" name="Rolls" onclick="ncount()">
+                            <label>
+                                <p><b>Roll No: </b>{{ x.S_Roll }} {{ y.username }}</p>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-7 left_display">
+                        <div>
+                            <p><b>Full Name: </b>{{ x.S_Full_Name }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                {% endif %}
+                {% endfor %}
+
+                <br>
+                <div style="display: none;">
+                    <input type="checkbox" value="{{ T_Details.T_Email }}" name="t_id" checked > 
+                </div>
+                <br>
+                <hr>
+
+                <button type="submit" class="r_btn" name="delete">Delete</button>
+                <button type="submit" class="btn" name="accept">Accept</button>
+            </form>
+              
+                <br>
+
+        </div>
+    </div>
+</div>
+
+{% load static %}
+<script src="{% static 'JS/T_Assign_C.js' %}"></script>
+
+
+{% else %}
+<div class="container">
+    <div class="block">
+        <div class="Denger-block">
+            {% load static %}
+            <img src="{% static 'PIC/denger.jpg' %}">
+            <h2>You are not Authorized </h2>
+            <h4>Please Contact with the Department if You Have Already Created an Account</h4>
+            <br>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

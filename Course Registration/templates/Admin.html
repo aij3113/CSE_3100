@@ -9,17 +9,17 @@
         <div class="col-lg-6 col-md-8 col-sm-10">
             <div class="block">
                 <div class="block-home">
-                    <h4>Login to your account</h4>
+                    <h4>Admin Login</h4>
                     <br>
                     <div class="row">
                         <div class="col-sm-6">
                             <ul class="nav navbar-nav center_display">
-                                <li><a href="{% url 'CR_Home' %}" class="active">User</a></li>
+                                <li><a href="{% url 'CR_Home' %}">User</a></li>
                             </ul> 
                         </div>
                         <div class="col-sm-6">
                             <ul class="nav navbar-nav center_display">
-                                <li><a href="{% url 'Admin_Log' %}">Admin</a></li>
+                                <li><a href="{% url 'Admin_Log' %}" class="active">Admin</a></li>
                             </ul> 
                         </div>
                     </div>
@@ -33,27 +33,12 @@
                             <input type="email" name="Email" placeholder="Email" required><br><br>
 
                             <label for="Password">Password</label><br>
-                            <input type="password" name="Password" placeholder="Password" required><br><br>
-
-                            <input type="radio" name="ST" value="Student" required>
-                            <label for="Student">
-                                <p>Student</p>
-                            </label>
-
-                            <input type="radio" name="ST" value="Teacher" required>
-                            <label for="Teacher">
-                                <p>Teacher</p>
-                            </label><br>
+                            <input type="password" name="Password" placeholder="Password" required><br><br><br>
 
                             <button type="submit" class="btn">Sign In</button>
                         </form>
 
-                        <a href="{% url 'F_Pass' %}">Forgot Password</a>
-
                     </div>
-                    <p>
-                        Don't have an account !<a class="btn" href="{% url 'CR_Reg' %}">Sign Up</a>
-                    </p>
                 </div>
             </div>
         </div>

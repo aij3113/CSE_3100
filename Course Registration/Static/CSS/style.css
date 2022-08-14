@@ -26,7 +26,6 @@ body {
     background-image: url(../PIC/back1.jpg);
     background-size: cover;
     background-repeat: no-repeat;
-    background-color: black;
     opacity: 0.9;
 }
 
@@ -200,8 +199,33 @@ CR_Home
                 background-color .15s ease-in-out,
                 border-color .15s ease-in-out,
                 box-shadow .15s ease-in-out;
-
 }
+
+.r_btn {
+    margin: 10px 5px;
+    text-align: center;
+    color: red;
+    padding: 3.5px 20px;
+    background-color: whitesmoke;
+    border: 3px solid red;
+    border-radius: 7px;
+    text-decoration: none;
+}
+
+.r_btn:hover {
+    text-decoration: none;
+    color: whitesmoke;
+    background-color: red;
+    border: 3px solid whitesmoke;
+    border-radius: 7px;
+    box-shadow: 4px 4px 7px red, -4px -4px 7px red, 
+                4px -4px 7px red, -4px 4px 7px red;
+    transition: color .15s ease-in-out,
+                background-color .15s ease-in-out,
+                border-color .15s ease-in-out,
+                box-shadow .15s ease-in-out;
+}
+
 
 .block-home p {
     padding: 10px 5px;
@@ -271,14 +295,14 @@ user
     text-align: left;
 }
 
+.left_display div {
+    padding-bottom: 10px;
+}
 .left_display p {
     padding: 6px 0px;
     margin: 0px;
 }
 
-.nrow {
-    padding: 10px 0px;
-}
 
 .Denger-block{
     text-align: center;

@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<div class="container">
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header">
+                <ul class="nav navbar-nav">
+                    <li><a class="navbar-brand" href="{% url 'Admin_Home' %}"><b>{{ Admin.T_Full_Name }}</b></a></li>
+                </ul>
+
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'Admin_Home' %}">Students</a></li>
+                <li><a href="{% url 'Admin_Tec' %}">Teachers</a></li>
+                <li><a href="{% url 'Admin_Crs' %}" class="active">Courses</a></li>
+                <li><a href="{% url 'CR_Home' %}">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<br>
+
+<div class="container">
+    <div class="block">
+        <nav class="navbar">
+            <ul class="nav navbar-nav center_display">
+                <li><a href="{% url 'Admin_Crs' %}">All Courses</a></li>
+                <li><a href="{% url 'Admin_Crs_Add' %}" class="active">Add Course</a></li>
+                <li><a href="#">Edit Course</a></li>
+            </ul>
+        </nav>
+
+        <div class="block-home">
+            <h4>Add Course in {{ Admin.T_Department.D_Name }} Department</h4>
+            <br>
+            <br>
+
+            {% if Y_Details %}
+            <form action="" method="post">
+                {% csrf_token %}
+
+                <div class="block-log">
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label for="C_Code">Course_Code</label><br>
+                            <input type="text" name="C_Code" placeholder="C_Code" required><br><br>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label for="C_Title">Course_Title</label><br>
+                            <input type="text" name="C_Title" placeholder="C_Title" required><br><br>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label for="C_Credit">Course_Credit</label><br>
+                            <input type="number" name="C_Credit" placeholder="0.00" step="0.01" required><br><br>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label for="Year">Year</label><br>
+                            <select id="Year" name="Year" onchange="GetSelectedValue();" required>
+                            {% for y in Y_Details %}
+                                {% if y.year == 0 %}
+                                    <option value="None" selected disabled>---</option>
+                                {% else %}
+                                    <option value="{{ y.year }}" >{{ y.year }}</option>
+                                {% endif %}
+                            {% endfor %}
+                            </select><br><br>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label for="Semester">Semester</label><br>
+                            <select id="Semester" name="Semester" required>
+                                <option value="NA" selected disabled>---</option>
+                            </select><br>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div style="display: none;">
+                    <input type="checkbox" value="{{ Admin.T_Department.D_Name }}" name="admin_dept" checked>
+                    <input type="checkbox" value="{{ Admin.T_Email }}" name="admin_id" checked>
+                </div>
+                <br>
+
+                <button type="submit" class="btn">ADD</button>
+
+            </form>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+{% load static %}
+<script src="{% static 'JS/admin_crs_add.js' %}"></script>
+
+
+{% else %}
+<div class="container">
+    <div class="block">
+        <div class="Denger-block">
+            {% load static %}
+            <img src="{% static 'PIC/denger.jpg' %}">
+            <h2>You are not Authorized </h2>
+            <h4>Please Contact with the Department if You Have Already Created an Account</h4>
+            <br>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
