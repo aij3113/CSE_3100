@@ -120,9 +120,9 @@ h3 {
 }
 
 .bttn:hover {
-    background-color: black;
-    color: blue;
-    border: 1.5px solid blue;
+    background-color: whitesmoke;
+    color: black;
+    border: 1.5px solid black;
 }
 
 .table {
@@ -336,11 +336,48 @@ user
 
 @media only screen and (max-width: 800px) {
     h1 {
-        font-size: 48px;
+        font-size: 24px;
     }
     h3 {
-        font-size: 34px;
+        font-size: 18px;
+    }
+    
+    h4 {
+        font-size: 18px;
     }
 
+    .ins-logo img {
+        width: 100%;
+        min-width: 85px;
+        max-width: 120px;
+        max-height: 110px;
+    }
+    p, a {
+        font-size: 90%;
+    }
     
+}
+
+@media only screen and (max-width: 576px){
+
+    h1 {
+        font-size: 22px;
+    }
+    h3 {
+        font-size: 16px;
+    }
+    
+    h4 {
+        font-size: 18px;
+    }
+    .ins-logo{
+        max-width:60px;
+        height:fit-content;
+    }
+    
+    .ins-name{
+        position:absolute;
+        max-width:70%;
+        margin:50px 10px 0px 90px;
+    }
 }

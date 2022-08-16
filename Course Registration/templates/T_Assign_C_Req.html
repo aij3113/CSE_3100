@@ -30,7 +30,7 @@
             <ul class="nav navbar-nav center_display">
                 <li><a href="{% url 'T_Assign_C' %}">Assign</a></li>
                 <li><a href="{% url 'T_Assign_C_Req' %}" class="active">Requestes</a></li>
-                <li><a href="#">Completed</a></li>
+                <li><a href="{% url 'T_Assign_C_Com' %}">Completed</a></li>
             </ul>
         </nav>
 
@@ -48,39 +48,73 @@
                     <label for="all">Select All&nbsp;</label><label id="nselected"> </label>
                 </div>
 
-                {% for x in SC_Details %}
-                {% if x.SC_T_AC is False %}
+                {% for x in S_Details %}
+                {% if x.S_is_Reg is True and x.S_T_AC is False %}
                 <div class="row">
                     <div class="col-sm-1"></div>
                     <div class="col-sm-4 left_display">
                         <div>
-                            <input type="checkbox" value="{{ x.SC_Roll }}" name="Rolls" onclick="ncount()">                            
+                            <input type="checkbox" value="{{ x.S_Roll }}" name="Rolls" onclick="ncount()">
                             <label>
-                                <b>Roll No: </b>{{ x.SC_Roll }}                            
+                                <b>Roll No: </b>{{ x.S_Roll }}
                             </label><br>
                             <label>
-                                <b>Series: </b>{{ x.SC_Series }}
-                            </label>
+                                <b>&nbsp;&nbsp;&nbsp;Series: </b>{{ x.S_Series }}
+                            </label><br>
+                            
+                            {% for z in SCBR_Details %}
+                            {% if z.SCBR_Roll == x.S_Roll and z.SCBR_Year.year == x.S_Year.year and z.SCBR_Sem.semester == x.S_Semester.semester %}
+                            
+                                 
+                                <b>&nbsp;&nbsp;&nbsp;Bank Receipt: </b><a href="{{ z.SCBR_Slip.url }}" target="_blank">{{ z.SCBR_Slip }}</a>
+
+                            {% endif %}
+                            {% endfor %}
                         </div>
                     </div>
 
                     <div class="col-sm-7 left_display">
-                        <div>
-                            <input type="hidden" value="{{ x.SC_Code }}" name="Codes" >
-                            <p><b>Course Code: </b>{{ x.SC_Code }}</p>
-                            <p><b>RS Semester: </b>{{ x.SC_RS_Sem.rs }}</p>
+                        {% for y in SC_Details %}
+                        {% if y.SC_Roll == x.S_Roll and y.SC_T_AC is False %}
+                        <div class="row">
+
+                            <div class="col-sm-6">
+                                {% if y.SC_RS_Sem.rs == "Regular" %}
+                                <input type="hidden" value="{{ y.SC_Code }}" name="Codes{{ x.S_Roll }}">
+                                {% else %}
+                                <input type="checkbox" value="{{ y.SC_Code }}" name="Codes{{ x.S_Roll }}">
+                                {% endif %}
+                                <label><b>Course: </b>{{ y.SC_Code }}</label>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <p><b>Semester: </b>{{ y.SC_RS_Sem.rs }}</p>
+                            </div>
+
                         </div>
+                        {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
+                <hr>
                 {% endif %}
                 {% endfor %}
 
-                <br>
-                <br>
-
-                
+                <input type="hidden" value="{{ T_Details.T_Email }}" name="t_id">
                 <hr>
-                <button type="submit" class="btn">Set All</button>
+                <div class="row">
+                    <div class="col-sm-3"></div>
+                    
+                    <div class="col-sm-3">
+                        <button type="submit" class="r_btn" name="reject">Reject</button>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <button type="submit" class="btn" name="accept">Accept</button>
+                    </div>
+
+                    <div class="col-sm-3"></div>
+                </div>
             </form>
 
         </div>

@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<div class="container">
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header">
+                <ul class="nav navbar-nav">
+                    <li><a class="navbar-brand" href="{% url 'T_Home' %}"><b>{{ T_Details.T_Full_Name }}</b></a></li>
+                </ul>
+
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'T_Home' %}">Students</a></li>
+                <li><a href="{% url 'T_Assign_C' %}" class="active">Assign Semester</a></li>
+                <li><a href="{% url 'T_Edit' %}">Edit Profile</a></li>
+                <li><a href="{% url 'CR_Home' %}">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<br>
+
+<div class="container">
+    <div class="block">
+
+        <nav class="navbar">
+            <ul class="nav navbar-nav center_display">
+                <li><a href="{% url 'T_Assign_C' %}">Assign</a></li>
+                <li><a href="{% url 'T_Assign_C_Req' %}">Requestes</a></li>
+                <li><a href="{% url 'T_Assign_C_Com' %}" class="active">Completed</a></li>
+            </ul>
+        </nav>
+
+        <div class="block-home">
+            <h4>Completed Registrations</h4>
+            <br>
+            <br>
+
+
+            {% for x in SCBR_Details %}
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-4 left_display">
+                    <div>
+                        <label>
+                            <b>Roll No: </b>{{ x.SCBR_Roll }}
+                        </label><br>
+                        <label>
+                            <b>Series: </b>{{ x.SCBR_Series }}
+                        </label><br>
+
+                        <label for=""><b>Bank Receipt: </b><a href="{{ z.SCBR_Slip.url }}"
+                            target="_blank">{{ x.SCBR_Slip }}</a>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-sm-7 left_display">
+                    {% for y in SC_Details %}
+                    {% if y.SC_Roll == x.SCBR_Roll and y.SC_RS_Sem.rs == x.SCBR_RS_Sem.rs and y.SC_Series == x.SCBR_Series and y.SC_T_AC is True %}
+                    <div class="row">
+
+                        <div class="col-sm-6">
+                            <label><b>Course: </b>{{ y.SC_Code }}</label>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label><b>Semester: </b>{{ y.SC_RS_Sem.rs }}</label>
+                        </div>
+
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <hr>
+            {% endfor %}
+
+
+        </div>
+    </div>
+</div>
+
+{% load static %}
+<script src="{% static 'JS/T_Assign_C.js' %}"></script>
+
+{% else %}
+<div class="container">
+    <div class="block">
+        <div class="Denger-block">
+            {% load static %}
+            <img src="{% static 'PIC/denger.jpg' %}">
+            <h2>You are not Authorized </h2>
+            <br>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

@@ -18,7 +18,8 @@ from django.urls import include,path
 from django.conf.urls.static import static
 from django.conf import settings
 
-from CR_Home.views import admin_crs, admin_crs_add, admin_home, admin_stu_edit, admin_stu_req, t_assign_c_req
+from CR_Home.views import admin_crs, admin_crs_add, admin_crs_edit, admin_home, admin_stu_edit
+from CR_Home.views import stu_course_com, t_assign_c_com, t_assign_c_req, admin_stu_req
 from CR_Home.views import admin_tec, admin_tec_edit, admin_tec_req, cr_home, f_pass, admin_log
 from CR_Home.views import stu_home, stu_course, stu_edit, t_assign_c, t_edit, t_home, t_stu_req 
 from Users.views import registration
@@ -39,10 +40,12 @@ urlpatterns = [
     path('adminTecEdit/',admin_tec_edit, name = 'Admin_Tec_Edit'),
     path('adminCrs/',admin_crs, name = 'Admin_Crs'),
     path('adminCrsAdd/',admin_crs_add, name = 'Admin_Crs_Add'),
+    path('adminCrsEdit/',admin_crs_edit, name = 'Admin_Crs_Edit'),
 
     #Student Pages
     path('stuHome/', stu_home, name = 'Stu_Home'),
     path('stuCourse/',stu_course, name = 'Stu_Course'),
+    path('stuCourseCom/',stu_course_com, name = 'Stu_Course_Com'),
     path('stuEdit/',stu_edit, name = 'Stu_Edit'),
     
     #Teacher Pages
@@ -50,9 +53,15 @@ urlpatterns = [
     path('tStuReq/',t_stu_req, name = 'T_Stu_Req'),
     path('tAssignC/',t_assign_c, name = 'T_Assign_C'),
     path('tAssignCReq/',t_assign_c_req, name = 'T_Assign_C_Req'),
+    path('tAssignCCom/',t_assign_c_com, name = 'T_Assign_C_Com'),
     path('tEdit/',t_edit, name = 'T_Edit'),
 
     
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+
+if settings.DEBUG:
+    urlpatterns+= static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
+    urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 

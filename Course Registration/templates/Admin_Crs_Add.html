@@ -29,7 +29,7 @@
             <ul class="nav navbar-nav center_display">
                 <li><a href="{% url 'Admin_Crs' %}">All Courses</a></li>
                 <li><a href="{% url 'Admin_Crs_Add' %}" class="active">Add Course</a></li>
-                <li><a href="#">Edit Course</a></li>
+                <li><a href="{% url 'Admin_Crs_Edit' %}">Edit Course</a></li>
             </ul>
         </nav>
 
@@ -94,10 +94,8 @@
 
                 </div>
 
-                <div style="display: none;">
-                    <input type="checkbox" value="{{ Admin.T_Department.D_Name }}" name="admin_dept" checked>
-                    <input type="checkbox" value="{{ Admin.T_Email }}" name="admin_id" checked>
-                </div>
+                <input type="hidden" value="{{ Admin.T_Department.D_Name }}" name="admin_dept">
+                <input type="hidden" value="{{ Admin.T_Email }}" name="admin_id">
                 <br>
 
                 <button type="submit" class="btn">ADD</button>

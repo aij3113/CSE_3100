@@ -27,7 +27,7 @@
 
         <ul class="nav navbar-nav">
             <li><a href="{% url 'Stu_Course' %}" class="active">Available</a></li>
-            <li><a href="#">Registered</a></li>
+            <li><a href="{% url 'Stu_Course_Com' %}">Registered</a></li>
         </ul>
 
         <div class="block-home">
@@ -104,7 +104,7 @@
 
                 </div>
 
-                {% else  %}
+                {% elif S_Details.S_is_Reg is True  %}
                     <div style="color: red;">
                         <h4>Sorry</h4>
                         <h5>No Courses Available</h5>

@@ -45,7 +45,7 @@ def gen_Stu_info(usermail):
         U_name      = User_QSet.username
         Stu_QSet    = Student.objects.get(S_Roll = U_name)
         Dept_QSet   = Department.objects.all()
-        SC_QSet     = Stu_Course.objects.all().filter(SC_Roll = Stu_QSet.S_Roll, SC_Year = Stu_QSet.S_Year.year, SC_Semester = Stu_QSet.S_Semester.semester)
+        SC_QSet     = Stu_Course.objects.all().filter(SC_Roll = Stu_QSet.S_Roll).order_by('-SC_Year','SC_Semester', 'SC_Code')
         SCBR_QSet   = Stu_CBR.objects.all().filter(SCBR_Roll = Stu_QSet.S_Roll, SCBR_Year = Stu_QSet.S_Year.year, SCBR_Sem = Stu_QSet.S_Semester.semester)
 
         global S_Dictionary
@@ -67,7 +67,7 @@ def gen_T_info(usermail):
         Sem_QSet    = Semester.objects.all()
         Y_QSet      = Year.objects.all()
         S_QSet      = Student.objects.all().filter(S_Series = T_QSet.T_Sup_Series, S_Department = T_QSet.T_Department.D_Name, S_Section = T_QSet.T_Sup_Section)
-        SC_QSet     = Stu_Course.objects.all().filter(SC_Series = T_QSet.T_Sup_Series, SC_Section = T_QSet.T_Sup_Section, SC_Dept = T_QSet.T_Department.D_Name)
+        SC_QSet     = Stu_Course.objects.all().filter(SC_Series = T_QSet.T_Sup_Series, SC_Section = T_QSet.T_Sup_Section, SC_Dept = T_QSet.T_Department.D_Name).order_by('SC_Year')
         SCBR_QSet   = Stu_CBR.objects.all().filter(SCBR_Series = T_QSet.T_Sup_Series, SCBR_Section = T_QSet.T_Sup_Section, SCBR_Dept = T_QSet.T_Department.D_Name)
 
         global T_Dictionary
@@ -166,19 +166,20 @@ def stu_course(request):
                 SC_Dept     = Department(S_QSet.S_Department.D_Name),
             )
 
-        Stu_CBR.objects.create(
-            SCBR_Roll     = U_id,
-            SCBR_Year     = Year(S_QSet.S_Year.year),
-            SCBR_Sem      = Semester(S_QSet.S_Semester.semester),
-            SCBR_RS_Sem   = Reg_St_Sem(S_QSet.S_RS_Sem.rs),
-            SCBR_Section  = S_QSet.S_Section,
-            SCBR_Series   = S_QSet.S_Series,
-            SCBR_Dept     = Department(S_QSet.S_Department.D_Name),
-            SCBR_Slip     = S_Slip
-        )
+        if Codes is not None:
+            Stu_CBR.objects.create(
+                SCBR_Roll     = U_id,
+                SCBR_Year     = Year(S_QSet.S_Year.year),
+                SCBR_Sem      = Semester(S_QSet.S_Semester.semester),
+                SCBR_RS_Sem   = Reg_St_Sem(S_QSet.S_RS_Sem.rs),
+                SCBR_Section  = S_QSet.S_Section,
+                SCBR_Series   = S_QSet.S_Series,
+                SCBR_Dept     = Department(S_QSet.S_Department.D_Name),
+                SCBR_Slip     = S_Slip
+            )
 
-        S_QSet.S_is_Reg = True
-        S_QSet.save()
+            S_QSet.S_is_Reg = True
+            S_QSet.save()
 
         gen_Stu_info(U_em)
         return render(request,'Stu_C_Reg.html',S_Dictionary)
@@ -186,6 +187,8 @@ def stu_course(request):
     else:
         return render(request,'Stu_C_Reg.html',S_Dictionary)
 
+def stu_course_com(request):
+    return render(request, 'Stu_C_Reg_Com.html',S_Dictionary)
 
 def stu_edit(request):
 
@@ -304,13 +307,81 @@ def t_assign_c(request):
 
 def t_assign_c_req(request):
 
-    if request.method == "POST":
+    if 'accept' in request.POST:
+        Rolls   = request.POST.getlist('Rolls')
+        T_id    = request.POST['t_id']
+
+        for roll in Rolls:
+            S_Q     = Student.objects.get(S_Roll = roll)
+            Codes  = request.POST.getlist('Codes'+roll)
+
+            for code in Codes:
+                SC    = Stu_Course.objects.all().filter(SC_Roll = roll, SC_Code = code, SC_Series = S_Q.S_Series, SC_RS_Sem = S_Q.S_RS_Sem.rs)
+                for SCobj in SC:
+                    SCobj.SC_T_AC = True
+                    SCobj.save()
         
-        return redirect('T_Assign_C')
+            S_Q.S_T_AC = True
+            S_Q.save()
+
+        gen_T_info(T_id)
+        return render(request, 'T_Assign_C_Req.html', T_Dictionary)
+
+
+    elif 'reject' in request.POST:
+        Rolls   = request.POST.getlist('Rolls')
+        T_id    = request.POST['t_id']
+
+        for roll in Rolls:
+            S_Q     = Student.objects.get(S_Roll = roll)
+            Codes  = request.POST.getlist('Codes'+roll)
+
+            for code in Codes:
+                SC    = Stu_Course.objects.all().filter(SC_Roll = roll, SC_Code = code, SC_Series = S_Q.S_Series, SC_RS_Sem = S_Q.S_RS_Sem.rs)
+                for SCobj in SC:
+                    SCobj.delete()
+            
+            if S_Q.S_RS_Sem.rs == "Regular":
+                SCBR   = Stu_CBR.objects.all().filter(SCBR_Roll = roll, SCBR_Year = S_Q.S_Year.year, SCBR_Series = S_Q.S_Series, SCBR_Sem = S_Q.S_Semester.semester)
+
+                for SCBRobj in SCBR:
+                    SCBRobj.delete()
+                
+                S_Q.S_is_Reg = False
+                S_Q.S_T_AC   = False
+                S_Q.save()
+
+            else:
+                SC = Stu_Course.objects.all().filter(SC_Roll = roll, SC_Series = S_Q.S_Series, SC_RS_Sem = S_Q.S_RS_Sem.rs, SC_T_AC = False)
+                
+                fl = False
+
+                for SCobj in SC:
+                    if SCobj:
+                        fl = True
+                        break
+                
+                if fl is False:
+                    SCBR   = Stu_CBR.objects.all().filter(SCBR_Roll = roll, SCBR_Year = S_Q.S_Year.year, SCBR_Series = S_Q.S_Series, SCBR_Sem = S_Q.S_Semester.semester)
+
+                    for SCBRobj in SCBR:
+                        SCBRobj.delete()
+                    
+                    S_Q.S_is_Reg = False
+                    S_Q.S_T_AC   = False
+                    S_Q.save()
+
+
+        gen_T_info(T_id)
+        return render(request, 'T_Assign_C_Req.html', T_Dictionary)
+
 
     else:
         return render(request,'T_Assign_C_Req.html',T_Dictionary)
 
+
+def t_assign_c_com(request):
+    return render(request, 'T_Assign_C_Com.html', T_Dictionary)
 
 def t_edit(request):
 
@@ -543,3 +614,43 @@ def admin_crs_add(request):
     else:
         return render(request, 'Admin_Crs_Add.html',Admin_Dictionary)
 
+
+def admin_crs_edit(request):
+    if 'save' in request.POST:
+        Ad_id   = request.POST['admin_id']
+        Ad_dept = request.POST['admin_dept']
+
+        Codes   = request.POST.getlist('Codes')
+
+        for code in Codes:
+            Title  = request.POST['Title'+code]
+            Credit = request.POST['Credit'+code]
+
+            CQ     = Course.objects.filter(C_Code = code, C_Department = Ad_dept)
+
+            for CQobj in CQ:
+                CQobj.C_Title  = Title
+                CQobj.C_Credit = Credit
+                CQobj.save()
+
+        gen_admin_info(Ad_id)
+        return render(request, 'Admin_Crs_Edit.html', Admin_Dictionary)
+
+    
+    elif 'delete' in request.POST:
+        Ad_id   = request.POST['admin_id']
+        Ad_dept = request.POST['admin_dept']
+
+        Codes   = request.POST.getlist('Codes')
+
+        for code in Codes:
+            CQ  = Course.objects.filter(C_Code = code, C_Department = Ad_dept)
+
+            for CQobj in CQ:
+                CQobj.delete()
+
+        gen_admin_info(Ad_id)
+        return render(request, 'Admin_Crs_Edit.html', Admin_Dictionary)
+
+    else:
+        return render(request, 'Admin_Crs_Edit.html', Admin_Dictionary)

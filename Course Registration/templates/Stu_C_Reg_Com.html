@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<div class="container">
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header">
+                <ul class="nav navbar-nav">
+                    <li><a class="navbar-brand" href="{% url 'Stu_Home' %}"><b>{{ S_Details.S_Full_Name }}</b></a></li>
+                </ul>
+
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'Stu_Course' %}" class="active">Register Course</a></li>
+                <li><a href="{% url 'Stu_Edit' %}">Edit Profile</a></li>
+                <li><a href="{% url 'CR_Home' %}">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<br>
+
+<div class="container">
+    <div class="block">
+
+        <ul class="nav navbar-nav">
+            <li><a href="{% url 'Stu_Course' %}">Available</a></li>
+            <li><a href="{% url 'Stu_Course_Com' %}" class="active">Registered</a></li>
+        </ul>
+
+        <div class="block-home">
+
+
+                {% if SC_Details  %}
+                <div class="inner_block">
+                    <div class="nrow">
+                        {% for x in SC_Details %}
+                        {% if x.SC_T_AC is True %}
+                        <div class="row">
+                            <div class="col-sm-3 left_display">
+                                <label>
+                                    <b>Year: </b>{{ x.SC_Year.year }}
+                                </label>
+                            </div>
+                            
+                            <div class="col-sm-3 left_display">
+                                <label>
+                                    <b>Semester: </b>{{ x.SC_Semester.semester }}
+                                </label>
+                            </div>
+                            
+                            <div class="col-sm-3 left_display">
+                                <label>
+                                    <b>Code: </b>{{ x.SC_Code }}
+                                </label>
+                            </div>
+                            
+                            <div class="col-sm-3 left_display">
+                                <label>
+                                    <b>R/S Sem: </b>{{ x.SC_RS_Sem.rs }}
+                                </label>
+                            </div>
+
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+                {% else  %}
+                    <div style="color: red;">
+                        <h5>No Courses Registered</h5>
+                    </div>
+                {% endif %}
+
+        </div>
+    </div>
+
+    {% load static %}
+    <script src="{% static 'JS/stu_c_reg.js' %}"></script>
+</div>
+
+{% else %}
+<div class="container">
+    <div class="block">
+        <div class="Denger-block">
+            {% load static %}
+            <img src="{% static 'PIC/denger.jpg' %}">
+            <h2>You are not Authorized </h2>
+            <br>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
