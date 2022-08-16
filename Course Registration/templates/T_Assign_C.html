@@ -25,26 +25,37 @@
 
 <div class="container">
     <div class="block">
+
+        <nav class="navbar">
+            <ul class="nav navbar-nav center_display">
+                <li><a href="{% url 'T_Assign_C' %}" class="active">Assign</a></li>
+                <li><a href="{% url 'T_Assign_C_Req' %}">Requestes</a></li>
+                <li><a href="#">Completed</a></li>
+            </ul>
+        </nav>
+
         <div class="block-home">
             <h4>Assign Courses to Students</h4>
             <br>
             <br>
 
-            
+
             <form action="" method="post">
                 {% csrf_token %}
-                
+
                 <div class="checkAll left_display">
                     <input type="checkbox" name="checkAll" onclick="selectUnselectAll()">
                     <label for="all">Select All&nbsp;</label><label id="nselected"> </label>
                 </div>
 
-                {% for x in S_Details %}      
+                {% for x in S_Details %}
                 <div class="row">
                     <div class="col-sm-5 left_display">
                         <div>
                             <input type="checkbox" value="{{ x.S_Roll }}" name="Rolls" onclick="ncount()">
-                            <label><p><b>Roll No: </b>{{ x.S_Roll }}</p></label>
+                            <label>
+                                <p><b>Roll No: </b>{{ x.S_Roll }}</p>
+                            </label>
                         </div>
                     </div>
 
@@ -52,53 +63,70 @@
                         <div>
                             <p><b>Full Name: </b>{{ x.S_Full_Name }}</p>
                         </div>
-                    </div>                    
-                </div>                
+                    </div>
+                </div>
                 {% endfor %}
-                                
+
                 <br>
                 <br>
 
                 <div class="row">
-                    <div class="col-sm-6 col-md-3 ">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-3 left_display">
                         <div>
                             <label for="sYear">Set Year</label><br>
                             <select id="syear" name="sYear" required>
-                                <option value="0" selected>---</option>
+                                <option value="0" selected disabled>---</option>
                                 {% for x in Y_Details %}
-                                    {% if x.year != 0 %}
-                                    <option value="{{ x.year }}">{{ x.year }}</option>
-                                    {% endif %}
+                                {% if x.year != 0 %}
+                                <option value="{{ x.year }}">{{ x.year }}</option>
+                                {% endif %}
                                 {% endfor %}
                             </select>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-3 ">
+                    <div class="col-sm-3 left_display">
                         <div>
                             <label for="sSemester">Set Semester</label><br>
                             <select id="ssemester" name="sSemester" required>
-                                <option value="NA" selected>---</option>
+                                <option value="NA" selected disabled>---</option>
                                 {% for x in Sem_Details %}
-                                    {% if x.semester != "NA" %}
-                                    <option value="{{ x.semester }}">{{ x.semester }}</option>
-                                    {% endif %}
+                                {% if x.semester != "NA" %}
+                                <option value="{{ x.semester }}">{{ x.semester }}</option>
+                                {% endif %}
                                 {% endfor %}
                             </select>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-3 ">
+                    <div class="col-sm-3 left_display">
+                        <div>
+                            <label for="rsSem">R/S Semester</label><br>
+                            <select id="rssem" name="rsSem" required>
+                                <option value="Regular" selected>Regular</option>
+                                <option value="Short">Short</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+                <div class="row">
+                    <div class="col-sm-2 col-md-3"></div>
+                    <div class="col-sm-4 left_display">
                         <div>
                             <label for="S_Date">Start Date</label><br>
                             <input type="date" name="S_Date" required>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-3 ">
+                    <div class="col-sm-3 left_display">
                         <div>
                             <label for="E_Date">End Date</label><br>
                             <input type="date" name="E_Date" required>
                         </div>
                     </div>
+                    <div class="col-sm-3 col-md-2"></div>
                 </div>
+                <hr>
                 <br>
                 <button type="submit" class="btn">Set All</button>
             </form>

@@ -1,5 +1,5 @@
-from inspect import CO_ASYNC_GENERATOR
 from django.db import models
+
 
 # Create your models here.
 
@@ -37,11 +37,39 @@ class Course(models.Model):
 
 
 #Student Course Table
-class Stu_Course_Reg(models.Model):
-    SCR_Roll      = models.IntegerField()
-    SCR_C_Code    = models.ForeignKey(Course, on_delete = models.PROTECT)
-    SCR_RS_Sem    = models.ForeignKey(Reg_St_Sem, on_delete = models.PROTECT)
+class Stu_Course(models.Model):
+    SC_Roll        = models.IntegerField()
+    SC_Year        = models.ForeignKey(Year,on_delete= models.PROTECT)
+    SC_Semester    = models.ForeignKey(Semester,on_delete= models.PROTECT)
+    SC_Code        = models.CharField(max_length=15)
+    SC_RS_Sem      = models.ForeignKey(Reg_St_Sem, on_delete = models.PROTECT)
+    SC_Dept       = models.ForeignKey(Department, on_delete= models.PROTECT)
+    SC_Series      = models.IntegerField()
+    SC_Section     = models.CharField(max_length=1, default= "X") 
+    SC_T_AC        = models.BooleanField(default=False)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields = ['SC_Roll', 'SC_Code', 'SC_RS_Sem', 'SC_Series'], name = 'unique_sc'
+            )
+        ]
 
 
+#Student Course Bank Receipt
+class Stu_CBR(models.Model):
+    SCBR_Roll       = models.IntegerField()
+    SCBR_Year       = models.ForeignKey(Year,on_delete= models.PROTECT)
+    SCBR_Sem        = models.ForeignKey(Semester, on_delete= models.PROTECT)
+    SCBR_RS_Sem     = models.ForeignKey(Reg_St_Sem, on_delete= models.PROTECT)
+    SCBR_Dept       = models.ForeignKey(Department, on_delete= models.PROTECT)
+    SCBR_Series     = models.IntegerField()
+    SCBR_Section    = models.CharField(max_length=1, default="X")
+    SCBR_Slip       = models.FileField(upload_to= 'Slips/')
 
-
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields = ['SCBR_Roll', 'SCBR_Year', 'SCBR_Sem', 'SCBR_Series'], name = 'unique_scbr'
+            )
+        ]

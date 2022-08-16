@@ -1,7 +1,7 @@
-import email
+from datetime import date
 from django.shortcuts import render, redirect
-from .models import Course, Department
-from CR_Home.models import Semester,Year
+from .models import Course, Department, Reg_St_Sem, Stu_CBR, Stu_Course
+from .models import Semester,Year
 from Users.models import Student, Teacher
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
@@ -45,14 +45,19 @@ def gen_Stu_info(usermail):
         U_name      = User_QSet.username
         Stu_QSet    = Student.objects.get(S_Roll = U_name)
         Dept_QSet   = Department.objects.all()
+        SC_QSet     = Stu_Course.objects.all().filter(SC_Roll = Stu_QSet.S_Roll, SC_Year = Stu_QSet.S_Year.year, SC_Semester = Stu_QSet.S_Semester.semester)
+        SCBR_QSet   = Stu_CBR.objects.all().filter(SCBR_Roll = Stu_QSet.S_Roll, SCBR_Year = Stu_QSet.S_Year.year, SCBR_Sem = Stu_QSet.S_Semester.semester)
 
         global S_Dictionary
         S_Dictionary = {
-            'Dept'        : Dept_QSet,
-            'S_Details'   : Stu_QSet,
-            'S_User'      : User_QSet,
+            'Dept'         : Dept_QSet,
+            'S_Details'    : Stu_QSet,
+            'S_User'       : User_QSet,
+            'SC_Details'   : SC_QSet,
+            'SCBR_Details' : SCBR_QSet,
         }
         return 
+
 
 def gen_T_info(usermail):
     if usermail is None:
@@ -62,15 +67,19 @@ def gen_T_info(usermail):
         Sem_QSet    = Semester.objects.all()
         Y_QSet      = Year.objects.all()
         S_QSet      = Student.objects.all().filter(S_Series = T_QSet.T_Sup_Series, S_Department = T_QSet.T_Department.D_Name, S_Section = T_QSet.T_Sup_Section)
+        SC_QSet     = Stu_Course.objects.all().filter(SC_Series = T_QSet.T_Sup_Series, SC_Section = T_QSet.T_Sup_Section, SC_Dept = T_QSet.T_Department.D_Name)
+        SCBR_QSet   = Stu_CBR.objects.all().filter(SCBR_Series = T_QSet.T_Sup_Series, SCBR_Section = T_QSet.T_Sup_Section, SCBR_Dept = T_QSet.T_Department.D_Name)
 
         global T_Dictionary
         T_Dictionary = {
-            'T_Details'   : T_QSet,
-            'S_Details'   : S_QSet,
-            'Y_Details'   : Y_QSet,
-            'Sem_Details' : Sem_QSet
+            'T_Details'    : T_QSet,
+            'S_Details'    : S_QSet,
+            'Y_Details'    : Y_QSet,
+            'Sem_Details'  : Sem_QSet,
+            'SC_Details'   : SC_QSet,
+            'SCBR_Details' : SCBR_QSet,
         }
-        return 
+        return
 
 
 def cr_home(request):
@@ -108,8 +117,7 @@ def cr_home(request):
         logout(request)
         return render(request,'CR_Home.html')
     
-    
-    
+        
 def f_pass(request):
     return render(request,'F_pass.html')
 
@@ -119,20 +127,61 @@ def stu_home(request):
 
 
 def stu_course(request):            
-    if request.method == "POST":
-        U_Dept      = request.POST['Department']
-        U_Year      = request.POST['Year']
-        U_Semester  = request.POST['Semester']
-        U_RegShort  = request.POST['RS'] 
+    if 'search' in request.POST:
+        U_id    = request.POST['stu_id']
 
-        Course_QuerySet  = Course.objects.all().filter(C_Department = Department(U_Dept),C_Year = Year(U_Year),C_Semester = Semester(U_Semester))
-        print(Course_QuerySet)
-        Course_Dictionary ={
-            'RS'      : U_RegShort,
-            'courses' : Course_QuerySet,
-        }
-        Course_Dictionary.update(S_Dictionary)
-        return render(request,'Stu_C_Reg.html',Course_Dictionary)
+        S_QSet  = Student.objects.get(S_Roll = U_id)
+        S_Date  = date.today()
+
+        if S_QSet.S_is_Reg == False and S_Date >= S_QSet.S_C_Start_D and S_QSet.S_C_End_D >= S_Date :
+
+            Course_QuerySet  = Course.objects.all().filter(C_Department = S_QSet.S_Department, C_Year = S_QSet.S_Year, C_Semester = S_QSet.S_Semester)
+            Course_Dictionary ={
+                'courses' : Course_QuerySet,
+            }
+            Course_Dictionary.update(S_Dictionary)
+            return render(request,'Stu_C_Reg.html',Course_Dictionary)
+
+        else:
+            return render(request,'Stu_C_Reg.html',S_Dictionary)
+
+
+    elif 'request' in request.POST:
+        U_id    = request.POST['stu_id']
+        U_em    = request.POST['stu_em']
+        Codes   = request.POST.getlist('C_Codes')
+        S_Slip  = request.FILES['pdf']
+
+        S_QSet  = Student.objects.get(S_Roll = U_id)
+
+        for code in Codes:
+            Stu_Course.objects.create(
+                SC_Roll     = U_id,
+                SC_Year     = Year(S_QSet.S_Year.year),
+                SC_Semester = Semester(S_QSet.S_Semester.semester),
+                SC_Code     = code,
+                SC_RS_Sem   = Reg_St_Sem(S_QSet.S_RS_Sem.rs),
+                SC_Section  = S_QSet.S_Section,
+                SC_Series   = S_QSet.S_Series,
+                SC_Dept     = Department(S_QSet.S_Department.D_Name),
+            )
+
+        Stu_CBR.objects.create(
+            SCBR_Roll     = U_id,
+            SCBR_Year     = Year(S_QSet.S_Year.year),
+            SCBR_Sem      = Semester(S_QSet.S_Semester.semester),
+            SCBR_RS_Sem   = Reg_St_Sem(S_QSet.S_RS_Sem.rs),
+            SCBR_Section  = S_QSet.S_Section,
+            SCBR_Series   = S_QSet.S_Series,
+            SCBR_Dept     = Department(S_QSet.S_Department.D_Name),
+            SCBR_Slip     = S_Slip
+        )
+
+        S_QSet.S_is_Reg = True
+        S_QSet.save()
+
+        gen_Stu_info(U_em)
+        return render(request,'Stu_C_Reg.html',S_Dictionary)
 
     else:
         return render(request,'Stu_C_Reg.html',S_Dictionary)
@@ -224,13 +273,13 @@ def t_stu_req(request):
         return render(request,'T_Stu_Req.html',T_Dictionary)
 
 
-
 def t_assign_c(request):
 
     if request.method == "POST":
         Rolls       = request.POST.getlist('Rolls')
         Set_Year    = request.POST['sYear']
         Set_Sem     = request.POST['sSemester']
+        Set_rsSem   = request.POST['rsSem']
         Start_Date  = request.POST['S_Date']
         End_Date    = request.POST['E_Date']
  
@@ -239,6 +288,8 @@ def t_assign_c(request):
 
             stu.S_Year      = Year(Set_Year)
             stu.S_Semester  = Semester(Set_Sem)
+            stu.S_RS_Sem    = Reg_St_Sem(Set_rsSem)
+            stu.S_is_Reg    = False 
             stu.S_C_Start_D = Start_Date
             stu.S_C_End_D   = End_Date
 
@@ -249,6 +300,16 @@ def t_assign_c(request):
 
     else:
         return render(request,'T_Assign_C.html',T_Dictionary)
+
+
+def t_assign_c_req(request):
+
+    if request.method == "POST":
+        
+        return redirect('T_Assign_C')
+
+    else:
+        return render(request,'T_Assign_C_Req.html',T_Dictionary)
 
 
 def t_edit(request):
@@ -345,15 +406,13 @@ def admin_stu_edit(request):
         Rolls   = request.POST.getlist('Rolls')
         Ad_id   = request.POST['admin_id']
         
-        U_year  = request.POST['Year']
-        U_sem   = request.POST['Semester']
+        U_ser   = request.POST['series']
         U_sec   = request.POST['Section']
 
         for roll in Rolls:
             stu = Student.objects.get(S_Roll = roll)
-            stu.S_Year = Year(U_year)
-            stu.S_Semester = Semester(U_sem)
-            stu.S_Section  = U_sec
+            stu.S_Series    = U_ser
+            stu.S_Section   = U_sec
             stu.save()
         
         gen_admin_info(Ad_id)
@@ -412,7 +471,6 @@ def admin_tec_edit(request):
  
     else:
         return render(request, 'Admin_Tec_Edit.html',Admin_Dictionary)
-
 
 
 def admin_tec(request):
@@ -484,3 +542,4 @@ def admin_crs_add(request):
     
     else:
         return render(request, 'Admin_Crs_Add.html',Admin_Dictionary)
+

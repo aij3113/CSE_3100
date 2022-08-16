@@ -79,31 +79,7 @@ function GetSelectedValue(){
         x.add(option);
     }
 
-    let SemValue = document.getElementById("Semester").value;
-    let RSLength = document.getElementById("RS").length;
-
-    if(SemValue != "None" && RSLength == 1){
-        let x = document.getElementById("RS");
-        const RSname = ["Regular","Short"];
-        const RSval = ["Regular","Short"];
-        
-        for(i=0; i<RSname.length; i++){
-            let option = document.createElement("option");
-            option.value = RSval[i];
-            option.text = RSname[i];
-            x.add(option);
-        }
-    }
-    else if(SemValue == "None"){
-        document.getElementById("RS").innerHTML = "";
-        x = document.getElementById("RS");
-        option = document.createElement("option");
-        option.value = "None";
-        option.selected = true;
-        option.disabled = true;
-        option.text = "---";
-        x.add(option);
-    }
+    
 }
 
 GetSelectedValue();

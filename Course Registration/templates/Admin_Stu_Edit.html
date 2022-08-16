@@ -74,33 +74,16 @@
                 <hr>
                 <div class="row">
                     <div class="col-sm-2"></div>
-                    <div class="col-sm-3 left_display">
+                    <div class="col-sm-4 left_display">
                         <label>
-                            <b>Year</b>
+                            <b>Move to Series</b>
                         </label><br>
-                            <select id="Year" name="Year">
-                                <option value="1">1st </option>
-                                <option value="2">2nd </option>
-                                <option value="3">3rd </option>
-                                <option value="4">4th </option>
-                            </select><br>
+                        <input type="number" placeholder="Enter Series" name="series" required ><br>
                     </div>
 
-                    <div class="col-sm-3 left_display">
-                        <label>
-                            <b>Semester</b>
-                        </label><br>
-                            <select id="Semester" name="Semester">
-                                {% for y in Sem_Details %}
-                                {% if y.semester != "NA" %}
-                                    <option value="{{ y.semester }}" selected> {{ y.semester }} </option>
-                                {% endif %}
-                                {% endfor %}
-                            </select><br>
-                    </div>
-
-                    <div class="col-sm-3 left_display">
-                        <label><b>Section</b></label><br>
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-4 left_display">
+                        <label><b>Moce to Section</b></label><br>
                         <select id="Section" name="Section">
                             <option value="A">Sec: A </option>
                             <option value="B">Sec: B </option>

@@ -87,8 +87,3 @@ def registration(request):
         return render(request,'CR_Reg.html',D_Dict)
 
 
-
-
-
-
-

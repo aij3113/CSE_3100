@@ -15,8 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include,path
+from django.conf.urls.static import static
+from django.conf import settings
 
-from CR_Home.views import admin_crs, admin_crs_add, admin_home, admin_stu_edit, admin_stu_req, admin_tec, admin_tec_edit, admin_tec_req, cr_home, f_pass, admin_log, stu_home, stu_course, stu_edit, t_assign_c, t_edit, t_home, t_stu_req 
+from CR_Home.views import admin_crs, admin_crs_add, admin_home, admin_stu_edit, admin_stu_req, t_assign_c_req
+from CR_Home.views import admin_tec, admin_tec_edit, admin_tec_req, cr_home, f_pass, admin_log
+from CR_Home.views import stu_home, stu_course, stu_edit, t_assign_c, t_edit, t_home, t_stu_req 
 from Users.views import registration
 
 urlpatterns = [
@@ -45,8 +49,10 @@ urlpatterns = [
     path('tHome/',t_home, name = 'T_Home'),
     path('tStuReq/',t_stu_req, name = 'T_Stu_Req'),
     path('tAssignC/',t_assign_c, name = 'T_Assign_C'),
+    path('tAssignCReq/',t_assign_c_req, name = 'T_Assign_C_Req'),
     path('tEdit/',t_edit, name = 'T_Edit'),
-    
+
     
     path('admin/', admin.site.urls),
-]
+] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+

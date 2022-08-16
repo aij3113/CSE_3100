@@ -24,105 +24,94 @@
 
 <div class="container">
     <div class="block">
+
+        <ul class="nav navbar-nav">
+            <li><a href="{% url 'Stu_Course' %}" class="active">Available</a></li>
+            <li><a href="#">Registered</a></li>
+        </ul>
+
         <div class="block-home">
-            <h4>Search Course</h4>
-            <br>
 
-            <form action="" method="post">
+            <form action="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div class="row">
-                    <div class="col-sm-2 center_display">
-                        <div>
-                            <label for="department">Department</label><br>
-                            <select id="department" name="Department" onchange="GetSelectedValue();" required>
-                                <option value="None">---</option>
-                                {% for x in Dept %}
-                                <option value="{{ x.D_Name }}">{{ x.D_Name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
 
-                    </div>
-                    <div class="col-sm-2 center_display">
-                        <div>
-                            <label for="Year">Year</label><br>
-                            <select id="Year" name="Year" onchange="GetSelectedValue();" required>
-                                <option value="0">---</option>
-                            </select>
-                        </div>
-                    </div>
+                <input type="hidden" name="stu_id" value="{{ S_Details.S_Roll }}" id="stu">
+                <input type="hidden" name="stu_em" value="{{ S_User.email }}" id="suser">
 
-                    <div class="col-sm-2 center_display">
-                        <div>
-                            <label for="Semester">Semester</label><br>
-                            <select id="Semester" name="Semester" onchange="GetSelectedValue();" required>
-                                <option value="NA">---</option>
-                            </select>
-                        </div>
-                    </div>
+                <br>
+                <button type="submit" name="search" class="btn">Search Courses</button>
+                <hr>
 
-                    <div class="col-sm-2 center_display">
-                        <div>
-                            <label for="RS">R/S</label><br>
-                            <select id="RS" name="RS" required>
-                                <option value="None">---</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4">
-                        <div>
-                            <br>
-                            <button type="submit" class="btn">Search</button>
-                        </div>
-                    </div>
-
-                </div>
-            </form>
-            <br>
-
-            {% if courses %}
-            <div class="inner_block">
-                <div class="row">
-                    <div class="col-sm-3 left_display">
-                        <p><b>Course Code</b></p>
-                    </div>
-                    <div class="col-sm-6 left_display">
-                        <p><b>Course Title</b></p>
-                    </div>
-                    <div class="col-sm-3 left_display">
-                        <p><b>Course Credit</b></p>
-                    </div>
-                </div>
-
-                <div class="nrow">
-                    {% for x in courses %}
+                {% if courses and S_Details.S_is_Reg is not True %}
+                <div class="inner_block">
                     <div class="row">
                         <div class="col-sm-3 left_display">
-                            <div>
-                                <input type="checkbox" value="{{ x.C_Code }}" name="C_Codes" onclick="ncount()">
-                                <label>
-                                    <p><b>{{ x.C_Code }}</b></p>
-                                </label>
-                            </div>
+                            <p><b>Course Code</b></p>
                         </div>
-
                         <div class="col-sm-6 left_display">
-                            <div>
-                                <p>{{ x.C_Title }}</p>
-                            </div>
+                            <p><b>Course Title</b></p>
                         </div>
                         <div class="col-sm-3 left_display">
-                            <div>
-                                <p>{{ x.C_Credit }}</p>
-                            </div>
+                            <p><b>Course Credit</b></p>
                         </div>
                     </div>
-                    {% endfor %}
+
+                    <div class="nrow">
+                        {% for x in courses %}
+                        {% if x.C_Year.year == S_Details.S_Year.year and x.C_Semester.semester == S_Details.S_Semester.semester %}
+                        <div class="row">
+                            <div class="col-sm-3 left_display">
+                                <div>
+                                    {% if S_Details.S_RS_Sem.rs == "Regular" %}
+                                    <input type="checkbox" value="{{ x.C_Code }}" name="C_Codes" onclick="ncount()"
+                                        checked style="display: none;">
+                                    {% else %}
+                                    <input type="checkbox" value="{{ x.C_Code }}" name="C_Codes" onclick="ncount()">
+                                    {% endif %}
+
+                                    <label>
+                                        <p><b>{{ x.C_Code }}</b></p>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 left_display">
+                                <div>
+                                    <p>{{ x.C_Title }}</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 left_display">
+                                <div>
+                                    <p>{{ x.C_Credit }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3 col-md-5"></div>
+                        <div class="col-sm-7 col-md-4 left_display">
+                            <label for="pdf"><b>Upload your Bank Receipt</b></label><br>
+                            <input type="file" name="pdf" required>
+                            <hr>  
+                        </div>      
+                        <div class="col-sm-2 col-md-3"></div>
+                    </div>
+                    <button type="submit" name="request" class="btn">Apply</button>
+
                 </div>
 
-            </div>
-            {% endif %}
+                {% else  %}
+                    <div style="color: red;">
+                        <h4>Sorry</h4>
+                        <h5>No Courses Available</h5>
+                    </div>
+                {% endif %}
+            </form>
+
         </div>
     </div>
 

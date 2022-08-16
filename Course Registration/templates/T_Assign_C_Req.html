@@ -8,14 +8,14 @@
         <div class="container">
             <div class="navbar-header">
                 <ul class="nav navbar-nav">
-                    <li><a class="navbar-brand" href="{% url 'Admin_Home' %}"><b>{{ Admin.T_Full_Name }}</b></a></li>
+                    <li><a class="navbar-brand" href="{% url 'T_Home' %}"><b>{{ T_Details.T_Full_Name }}</b></a></li>
                 </ul>
 
             </div>
             <ul class="nav navbar-nav">
-                <li><a href="{% url 'Admin_Home' %}">Students</a></li>
-                <li><a href="{% url 'Admin_Tec' %}" class="active">Teachers</a></li>
-                <li><a href="{% url 'Admin_Crs' %}">Courses</a></li>
+                <li><a href="{% url 'T_Home' %}">Students</a></li>
+                <li><a href="{% url 'T_Assign_C' %}" class="active">Assign Semester</a></li>
+                <li><a href="{% url 'T_Edit' %}">Edit Profile</a></li>
                 <li><a href="{% url 'CR_Home' %}">Logout</a></li>
             </ul>
         </div>
@@ -25,18 +25,20 @@
 
 <div class="container">
     <div class="block">
+
         <nav class="navbar">
             <ul class="nav navbar-nav center_display">
-                <li><a href="{% url 'Admin_Tec' %}">All Teachers</a></li>
-                <li><a href="{% url 'Admin_Tec_Req' %}" class="active">Pending Requests</a></li>
-                <li><a href="{% url 'Admin_Tec_Edit' %}">Edit Teachers</a></li>
+                <li><a href="{% url 'T_Assign_C' %}">Assign</a></li>
+                <li><a href="{% url 'T_Assign_C_Req' %}" class="active">Requestes</a></li>
+                <li><a href="#">Completed</a></li>
             </ul>
         </nav>
 
         <div class="block-home">
-            <h4>Teacher Requests</h4>
+            <h4>Course Registration Requests</h4>
             <br>
             <br>
+
 
             <form action="" method="post">
                 {% csrf_token %}
@@ -46,36 +48,39 @@
                     <label for="all">Select All&nbsp;</label><label id="nselected"> </label>
                 </div>
 
-                {% for x in T_Details %}
-                {% if x.T_is_active is not True %}
+                {% for x in SC_Details %}
+                {% if x.SC_T_AC is False %}
                 <div class="row">
-                    <div class="col-sm-5 left_display">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4 left_display">
                         <div>
-                            <input type="checkbox" value="{{ x.T_Email }}" name="Emails" onclick="ncount()">
+                            <input type="checkbox" value="{{ x.SC_Roll }}" name="Rolls" onclick="ncount()">                            
                             <label>
-                                <p><b>Email ID: </b>{{ x.T_Email }}</p>
+                                <b>Roll No: </b>{{ x.SC_Roll }}                            
+                            </label><br>
+                            <label>
+                                <b>Series: </b>{{ x.SC_Series }}
                             </label>
                         </div>
                     </div>
 
                     <div class="col-sm-7 left_display">
                         <div>
-                            <p><b>Full Name: </b>{{ x.T_Full_Name }}</p>
+                            <input type="hidden" value="{{ x.SC_Code }}" name="Codes" >
+                            <p><b>Course Code: </b>{{ x.SC_Code }}</p>
+                            <p><b>RS Semester: </b>{{ x.SC_RS_Sem.rs }}</p>
                         </div>
                     </div>
                 </div>
-
                 {% endif %}
                 {% endfor %}
 
                 <br>
-                <div style="display: none;">
-                    <input type="checkbox" value="{{ Admin.T_Email }}" name="admin_id" checked > 
-                </div>
                 <br>
 
-                <button type="submit" class="r_btn" name="delete">Delete</button>
-                <button type="submit" class="btn" name="accept">Accept</button>
+                
+                <hr>
+                <button type="submit" class="btn">Set All</button>
             </form>
 
         </div>
@@ -85,7 +90,6 @@
 {% load static %}
 <script src="{% static 'JS/T_Assign_C.js' %}"></script>
 
-
 {% else %}
 <div class="container">
     <div class="block">
@@ -93,7 +97,6 @@
             {% load static %}
             <img src="{% static 'PIC/denger.jpg' %}">
             <h2>You are not Authorized </h2>
-            <h4>Please Contact with the Department if You Have Already Created an Account</h4>
             <br>
         </div>
     </div>

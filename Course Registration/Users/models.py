@@ -1,7 +1,7 @@
 from datetime import date
 from django.db import models
 
-from CR_Home.models import Department, Semester, Year
+from CR_Home.models import Department, Reg_St_Sem, Semester, Year
 
 # Create your models here.
 
@@ -15,7 +15,9 @@ class Student (models.Model):
     S_Prev_Earned_C = models.DecimalField(decimal_places = 2, max_digits = 5, default = 0.0)
     S_Department    = models.ForeignKey(Department, on_delete = models.PROTECT)
     S_Year          = models.ForeignKey(Year, on_delete = models.PROTECT ,default = 0)
-    S_Semester      = models.ForeignKey(Semester, on_delete = models.PROTECT, default = "NA") 
+    S_Semester      = models.ForeignKey(Semester, on_delete = models.PROTECT, default = "NA")
+    S_is_Reg        = models.BooleanField(default= False) 
+    S_RS_Sem        = models.ForeignKey(Reg_St_Sem, on_delete = models.PROTECT, default= "Regular")
     S_C_Start_D     = models.DateField(default = ('2099-01-01'))
     S_C_End_D       = models.DateField(default = date.today)
     S_is_active     = models.BooleanField(default = False)
@@ -35,6 +37,6 @@ class Teacher (models.Model):
     T_Department    = models.ForeignKey(Department,on_delete= models.PROTECT)
     T_Designation   = models.CharField(max_length=30, default = "Not Added")
     T_Sup_Series    = models.IntegerField(default = 0)
-    T_Sup_Section   = models.CharField(max_length = 1, default = "x")
+    T_Sup_Section   = models.CharField(max_length = 1, default = "X")
     T_is_active     = models.BooleanField(default = False)
 
