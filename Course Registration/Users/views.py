@@ -38,6 +38,12 @@ def registration(request):
                     Flg = False
                     break
 
+            dup_user2 = Student.objects.all().filter(S_Roll = U_roll)
+            for x in dup_user2:
+                if x.S_Roll == U_roll:
+                    Flg = False
+                    break
+
             if Flg == True:
                 myuser = User.objects.create_user(U_roll, U_email, U_pass)
                 myuser.is_active = False
@@ -66,21 +72,37 @@ def registration(request):
                 return redirect('CR_Home')
 
             else:
+                messages.error(request,"User Already Exists ! ")
                 return redirect('CR_Reg')
         
         elif (U_s_t == "Teacher" and U_pass==U_cpass):
-            myuser = User.objects.create_user(U_email, U_email, U_pass)
-            myuser.is_active = False
-            myuser.save()
+            dup_user = User.objects.all().filter(email = U_email)
+            Flg = True
+            for x in dup_user:
+                if x.email == U_email:
+                    Flg = False
+                    break
 
-            Teacher.objects.create(
-                T_Full_Name     = U_name,
-                T_Email         = U_email,
-                T_Designation   = U_dsgn,
-                T_Department    = Department(U_dept)
-            )
+            if Flg == True:
+                myuser = User.objects.create_user(U_email, U_email, U_pass)
+                myuser.is_active = False
+                myuser.save()
 
-            return redirect('CR_Home')
+                Teacher.objects.create(
+                    T_Full_Name     = U_name,
+                    T_Email         = U_email,
+                    T_Designation   = U_dsgn,
+                    T_Department    = Department(U_dept)
+                )
+
+                return redirect('CR_Home')
+            else:
+                messages.error(request,"User Already Exists ! ")
+                return redirect('CR_Reg')
+        
+        elif (U_pass != U_cpass):
+            messages.error(request,"Both Password Doesn't Match ! ")
+            return redirect('CR_Reg')
         
     
     else:

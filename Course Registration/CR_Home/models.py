@@ -27,6 +27,7 @@ class Course(models.Model):
     C_Department    = models.ForeignKey(Department, on_delete = models.PROTECT)
     C_Year          = models.ForeignKey(Year, on_delete = models.PROTECT, default=0)
     C_Semester      = models.ForeignKey(Semester, on_delete = models.PROTECT, default="NA")
+    C_Optional      = models.BooleanField(default=False)
 
     class Meta:
         constraints = [
@@ -64,6 +65,7 @@ class Stu_CBR(models.Model):
     SCBR_RS_Sem     = models.ForeignKey(Reg_St_Sem, on_delete= models.PROTECT)
     SCBR_Dept       = models.ForeignKey(Department, on_delete= models.PROTECT)
     SCBR_Series     = models.IntegerField()
+    SCBR_T_AC       = models.BooleanField(default= False)
     SCBR_Section    = models.CharField(max_length=1, default="X")
     SCBR_Slip       = models.FileField()
 

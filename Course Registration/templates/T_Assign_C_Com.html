@@ -41,6 +41,7 @@
 
 
             {% for x in SCBR_Details %}
+            {% if x.SCBR_T_AC is True %}
             <div class="row">
                 <div class="col-sm-1"></div>
                 <div class="col-sm-4 left_display">
@@ -77,6 +78,7 @@
                 </div>
             </div>
             <hr>
+            {% endif %}
             {% endfor %}
 
 

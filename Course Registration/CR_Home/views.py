@@ -1,4 +1,5 @@
 from datetime import date
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from .models import Course, Department, Reg_St_Sem, Stu_CBR, Stu_Course
 from .models import Semester,Year
@@ -85,34 +86,49 @@ def gen_T_info(usermail):
 def cr_home(request):
     
     if request.method == "POST":
+        
         U_Email     = request.POST['Email']
         U_Password  = request.POST['Password']
         U_Status    = request.POST['ST']
         
-        if U_Status == "Student":            
-            gen_Stu_info(U_Email)
-            Auth_User = authenticate(username = S_Dictionary['S_User'], password=U_Password)
+        User_QSet   = User.objects.all()
 
-            if Auth_User is not None:
-                login(request, Auth_User)
-                return render(request,'Stu_Home.html',S_Dictionary)
+        flg = False
+        for x in User_QSet:
+            if x.email == U_Email:
+                flg = True
+                break
 
-            else:
-                return render(request,'Stu_Home.html')
-                
+        if flg == True:
+            if U_Status == "Student":
+                gen_Stu_info(U_Email)
+                Auth_User = authenticate(username = S_Dictionary['S_User'], password=U_Password)
+
+                if Auth_User is not None:
+                    login(request, Auth_User)
+                    return render(request,'Stu_Home.html',S_Dictionary)
+
+                else:
+                    return render(request,'Stu_Home.html')
+                         
             
 
-        elif U_Status == "Teacher":
-            gen_T_info(U_Email)
-            Auth_User = authenticate(username = U_Email, password = U_Password)
+            elif U_Status == "Teacher":
+                gen_T_info(U_Email)
+                Auth_User = authenticate(username = U_Email, password = U_Password)
 
-            if Auth_User is not None:
-                login(request,Auth_User)
-                return render(request,'T_Home.html',T_Dictionary)
+                if Auth_User is not None:
+                    login(request,Auth_User)
+                    return render(request,'T_Home.html',T_Dictionary)
 
-            else:
-                return redirect('T_Home')
+                else:
+                    return redirect('T_Home')
         
+        
+        else:
+            messages.error(request,"User Not Found ! ")
+            return render(request,'CR_Home.html')
+
     else:
         logout(request)
         return render(request,'CR_Home.html')
@@ -126,7 +142,7 @@ def stu_home(request):
     return render(request,'Stu_Home.html',S_Dictionary)
 
 
-def stu_course(request):            
+def stu_course(request):
     if 'search' in request.POST:
         U_id    = request.POST['stu_id']
 
@@ -187,8 +203,10 @@ def stu_course(request):
     else:
         return render(request,'Stu_C_Reg.html',S_Dictionary)
 
+
 def stu_course_com(request):
     return render(request, 'Stu_C_Reg_Com.html',S_Dictionary)
+
 
 def stu_edit(request):
 
@@ -382,6 +400,7 @@ def t_assign_c_req(request):
 
 def t_assign_c_com(request):
     return render(request, 'T_Assign_C_Com.html', T_Dictionary)
+
 
 def t_edit(request):
 
