@@ -19,9 +19,10 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 from CR_Home.views import admin_crs, admin_crs_add, admin_crs_edit, admin_home, admin_stu_edit
-from CR_Home.views import stu_course_com, t_assign_c_com, t_assign_c_req, admin_stu_req
-from CR_Home.views import admin_tec, admin_tec_edit, admin_tec_req, cr_home, f_pass, admin_log
-from CR_Home.views import stu_home, stu_course, stu_edit, t_assign_c, t_edit, t_home, t_stu_req 
+from CR_Home.views import stu_course_com, t_assign_c_com, t_assign_c_req, admin_stu_req, admin_change
+from CR_Home.views import admin_stu, admin_tec_edit, admin_tec_req, cr_home, f_pass, admin_log
+from CR_Home.views import stu_home, stu_course, stu_edit, t_assign_c, t_edit, t_home, t_stu_req
+from CR_Home.views import pass_change 
 from Users.views import registration
 
 urlpatterns = [
@@ -29,15 +30,17 @@ urlpatterns = [
     path('',cr_home, name='CR_Home'),
     path('adminLog/',admin_log, name = 'Admin_Log'),
     path('regPage/',registration, name = 'CR_Reg'),
-    path('f_passPage/',f_pass, name = 'F_Pass'),
+    path('fPass/',f_pass, name = 'F_Pass'),
+    path('<uidb64>/<token>', pass_change, name='PChange'),
     
     #Admin Pages
     path('adminHome/',admin_home, name = 'Admin_Home'),
-    path('adminStuReq/',admin_stu_req, name = 'Admin_Stu_Req'),
-    path('adminStuEdit/',admin_stu_edit, name = 'Admin_Stu_Edit'),
-    path('adminTec/',admin_tec, name = 'Admin_Tec'),
     path('adminTecReq/',admin_tec_req, name = 'Admin_Tec_Req'),
     path('adminTecEdit/',admin_tec_edit, name = 'Admin_Tec_Edit'),
+    path('adminChange/', admin_change, name = 'Admin_Change'),
+    path('adminStu/',admin_stu, name = 'Admin_Stu'),
+    path('adminStuReq/',admin_stu_req, name = 'Admin_Stu_Req'),
+    path('adminStuEdit/',admin_stu_edit, name = 'Admin_Stu_Edit'),
     path('adminCrs/',admin_crs, name = 'Admin_Crs'),
     path('adminCrsAdd/',admin_crs_add, name = 'Admin_Crs_Add'),
     path('adminCrsEdit/',admin_crs_edit, name = 'Admin_Crs_Edit'),

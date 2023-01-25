@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 col-md-2 col-sm-1">
+        </div>
+        <div class="col-lg-6 col-md-8 col-sm-10">
+            <div class="block">
+                <div class="block-home">
+                    <h4>Reset Account's Password </h4>
+                    <br>    
+                    <div class="block-log">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                        
+                            <label for="Email">New Password</label><br>
+                            <input type="password" name="Pass" placeholder="New Password" required><br><br>
+                            <label for="CPassword">Confirm New Password</label><br>
+                            <input type="password" name="CPass" placeholder="Confirm New Password" required><br><br>
+                            <br>
+
+                    </div>
+
+                    <button type="submit" class="btn" name="save">Save</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-2 col-sm-1">
+        </div>
+    </div>
+</div>
+
+{% endblock %}

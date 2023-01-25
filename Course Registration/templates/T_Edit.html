@@ -45,7 +45,7 @@
                             <label style="color: red;"><b>Email</b></label><br>
                             <select id="email" name="Email" required>
                                 <option value="{{ T_Details.T_Email }}" selected>{{ T_Details.T_Email }}</option>
-                            </select>
+                            </select><br><br>
                         </div>
                     </div>
                 </div>
@@ -55,8 +55,11 @@
                     <div class="col-sm-1"></div>
 
                     <div class="col-sm-6 left_display">
-                        <label for="Department">Designation</label><br>
-                        <input type="text" name="Designation" value="{{ T_Details.T_Designation }}" required><br><br>
+                        <div>
+                            <label for="Department">Designation</label><br>
+                            <input type="text" name="Designation" value="{{ T_Details.T_Designation }}"
+                                required><br><br>
+                        </div>
                     </div>
 
                     <div class="col-sm-5 left_display">

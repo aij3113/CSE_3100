@@ -268,6 +268,15 @@ user
     box-shadow: 0px 4px 5px rgb(18 134 157);
 }
 
+.active-red {
+    border-radius: 4px;
+    box-shadow: 0px 4px 5px rgb(225, 7, 7);
+}
+
+.mov10px {
+    margin-left: -18px;
+}
+
 .navbar-nav a:hover {
     color: rgb(18 134 157);
     text-decoration:none;
@@ -296,6 +305,7 @@ user
 }
 
 .left_display div {
+    padding-left: 15px;
     padding-bottom: 10px;
 }
 .left_display p {
@@ -369,6 +379,10 @@ user
     
     h4 {
         font-size: 18px;
+    }
+
+    .upper{
+        padding: 0px 12px;
     }
     .ins-logo{
         max-width:60px;

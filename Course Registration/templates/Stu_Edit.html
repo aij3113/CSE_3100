@@ -43,9 +43,7 @@
                     <div class="col-sm-5 left_display">
                         <div>
                             <label style="color: red;"><b>Roll No</b></label><br>
-                            <select id="roll" name="Roll" required>
-                                <option value="{{ S_Details.S_Roll }}" selected>{{ S_Details.S_Roll }}</option>
-                            </select>
+                            <label>{{ S_Details.S_Roll }}</label>
                         </div>
                     </div>
                 </div>
@@ -56,13 +54,13 @@
                     <div class="col-sm-6 left_display">
                         <div>
                             <label for="Department">Department</label><br>
-                            <input type="text" name="Dept" value="{{ S_Details.S_Department.D_Name }}" required readonly><br><br>
+                            <label>{{ S_Details.S_Department.D_Name }}</label><br><br>
                         </div>
                     </div>
                     <div class="col-sm-5 left_display">
                         <div>
                             <label for="Series">Series</label><br>
-                            <input type="text" name="Series" value="{{ S_Details.S_Series }}" required readonly><br><br>
+                            <label>{{ S_Details.S_Series }}</label><br><br>
                         </div>
                     </div>
                 </div>
@@ -73,13 +71,13 @@
                     <div class="col-sm-6 left_display">
                         <div>
                             <label for="Section">Section</label><br>
-                            <input type="text" name="Section" value="{{ S_Details.S_Section }}" required readonly><br><br>
+                            <label>{{ S_Details.S_Section }}</label><br><br>
                         </div>
                     </div>
                     <div class="col-sm-5 left_display">
                         <div>
                             <label for="Registration">Registration No</label><br>
-                            <input type="text" name="Reg_No" value="{{ S_Details.S_Reg_No }}" required><br><br>
+                            <label>{{ S_Details.S_Reg_No }}</label><br><br>
                         </div>
                     </div>
                 </div>

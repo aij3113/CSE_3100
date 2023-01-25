@@ -9,6 +9,7 @@ from CR_Home.models import Department, Reg_St_Sem, Semester, Year
 class Student (models.Model):
     S_Roll          = models.IntegerField(primary_key = True)
     S_Full_Name     = models.CharField(max_length = 100)
+    S_Email         = models.EmailField()
     S_Series        = models.IntegerField()
     S_Section       = models.CharField(max_length = 1)
     S_Reg_No        = models.IntegerField()

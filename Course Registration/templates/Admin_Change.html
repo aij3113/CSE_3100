@@ -13,8 +13,8 @@
 
             </div>
             <ul class="nav navbar-nav">
-                <li><a href="{% url 'Admin_Home' %}">Teachers</a></li>
-                <li><a href="{% url 'Admin_Stu' %}" class="active">Students</a></li>
+                <li><a href="{% url 'Admin_Home' %}" class="active">Teachers</a></li>
+                <li><a href="{% url 'Admin_Stu' %}">Students</a></li>
                 <li><a href="{% url 'Admin_Crs' %}">Courses</a></li>
                 <li><a href="{% url 'CR_Home' %}">Logout</a></li>
             </ul>
@@ -27,50 +27,53 @@
     <div class="block">
         <nav class="navbar">
             <ul class="nav navbar-nav center_display">
-                <li><a href="{% url 'Admin_Stu' %}">All Students</a></li>
-                <li><a href="{% url 'Admin_Stu_Req' %}" class="active">Pending Requests</a></li>
-                <li><a href="{% url 'Admin_Stu_Edit' %}">Edit Student</a></li>
+                <li><a href="{% url 'Admin_Home' %}">All Teachers</a></li>
+                <li><a href="{% url 'Admin_Tec_Req' %}">Pending Requests</a></li>
+                <li><a href="{% url 'Admin_Tec_Edit' %}">Edit Teachers</a></li>
+                <li><a href="{% url 'Admin_Change' %}" class="active-red" style="color: Red;">Change Admin</a></li>
             </ul>
         </nav>
 
         <div class="block-home">
-            <h4>Student Requests</h4>
+            <h4>Change Department Head</h4>
             <br>
             <br>
 
             <form action="" method="post">
                 {% csrf_token %}
 
-                <div class="checkAll left_display">
-                    <input type="checkbox" name="checkAll" onclick="selectUnselectAll()">
-                    <label for="all">Select All&nbsp;</label><label id="nselected"> </label>
-                </div>
-
-                {% for x in S_Details %}
-                {% if x.S_is_active is not True %}
+                {% for x in T_Details %}
+                {% if x.T_is_active is True %}
                 <div class="row">
-                    <div class="col-sm-5 left_display">
-                        <div>
-                            <input type="checkbox" value="{{ x.S_Roll }}" name="Rolls" onclick="ncount()">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-6 left_display">
+                        <div class="mov10px">
+                            <input type="radio" value="{{ x.T_Email }}" name="Email" required>
                             <label>
-                                <p><b>Roll No: </b>{{ x.S_Roll }}</p>
-                            </label>
+                                <b>Name: </b> {{ x.T_Full_Name }}
+                            </label><br>
+                        </div>
+                        <div>
+                            <label>
+                                <b>Designation: </b> {{x.T_Designation}} 
+                            </label><br>
                         </div>
                     </div>
 
-                    <div class="col-sm-7 left_display">
+                    <div class="col-md-5 left_display">
                         <div>
-                            <p><b>Full Name: </b>{{ x.S_Full_Name }}</p>
-                            <p><b>Email: </b> {{ x.S_Email }} </p>
+                            <label>
+                                <b>Email: </b> {{x.T_Email}} 
+                            </label><br>
                         </div>
                     </div>
                 </div>
-                <br>
-
+                <hr>
                 {% endif %}
                 {% endfor %}
 
-                <br>
+                <hr>
+                
                 <div style="display: none;">
                     <input type="checkbox" value="{{ Admin.T_Email }}" name="admin_id" checked > 
                 </div>
@@ -78,14 +81,12 @@
 
                 <div class="row">
                     <div class="col-sm-3"></div>
-                    <div class="col-sm-3">
-                        <button type="submit" class="r_btn" name="delete">Delete</button>
-                    </div>
-                    <div class="col-sm-3">
-                        <button type="submit" class="btn" name="accept">Accept</button>
+                    <div class="col-sm-6">
+                        <button type="submit" class="r_btn" name="change">Change</button>
                     </div>
                     <div class="col-sm-3"></div>
                 </div>
+                
             </form>
 
         </div>
@@ -93,7 +94,7 @@
 </div>
 
 {% load static %}
-<script src="{% static 'JS/T_Assign_C.js' %}"></script>
+<script src="{% static 'JS/admin_tec_edit.js' %}"></script>
 
 
 {% else %}

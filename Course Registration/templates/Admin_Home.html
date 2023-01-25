@@ -13,8 +13,8 @@
 
             </div>
             <ul class="nav navbar-nav">
-                <li><a href="{% url 'Admin_Home' %}" class="active">Students</a></li>
-                <li><a href="{% url 'Admin_Tec' %}">Teachers</a></li>
+                <li><a href="{% url 'Admin_Home' %}" class="active">Teachers</a></li>
+                <li><a href="{% url 'Admin_Stu' %}">Students</a></li>
                 <li><a href="{% url 'Admin_Crs' %}">Courses</a></li>
                 <li><a href="{% url 'CR_Home' %}">Logout</a></li>
             </ul>
@@ -27,35 +27,134 @@
     <div class="block">
         <nav class="navbar">
             <ul class="nav navbar-nav center_display">
-                <li><a href="{% url 'Admin_Home' %}" class="active">All Students</a></li>
-                <li><a href="{% url 'Admin_Stu_Req' %}">Pending Requests</a></li>
-                <li><a href="{% url 'Admin_Stu_Edit' %}">Edit Student</a></li>
+                <li><a href="{% url 'Admin_Home' %}" class="active">All Teachers</a></li>
+                <li><a href="{% url 'Admin_Tec_Req' %}">Pending Requests</a></li>
+                <li><a href="{% url 'Admin_Tec_Edit' %}">Edit Teacher</a></li>
+                <li><a href="{% url 'Admin_Change' %}" style="color: Red;">Change Admin</a></li>
             </ul>
         </nav>
 
         <div class="block-home">
-            <h4>Students of {{ Admin.T_Department.D_Name }} Department</h4>
+            <h4>Faculty Members of {{ Admin.T_Department.D_Name }} Department</h4>
             <br>
             <br>
 
-            {% for x in S_Details %}
-            {% if x.S_is_active is True %}
+            {% if Admin %}
+            <h5 class="left_display">Head</h5>
             <div class="row">
-                <div class="col-sm-5 left_display">
+                <div class="col-sm-6 left_display">
                     <div>
                         <label>
-                            <p><b>Roll No: </b>{{ x.S_Roll }}</p>
+                            <p><b>Name: </b>{{ Admin.T_Full_Name }}</p>
+                            <p><b>Email: </b>{{ Admin.T_Email }}</p>
                         </label>
                     </div>
                 </div>
 
-                <div class="col-sm-7 left_display">
+                <div class="col-sm-6 left_display">
                     <div>
-                        <p><b>Full Name: </b>{{ x.S_Full_Name }}</p>
+                        <label>
+                            <p><b>Designation: </b>{{ Admin.T_Designation }}</p>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <h5 class="left_display">Other Members</h5>
+            {% endif %}
+
+            {% for x in T_Details %}
+            {% if x.T_is_active is True and x.T_Designation == "Professor" %}
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-6 left_display">
+                    <div>
+                        <p><b>Name: </b>{{ x.T_Full_Name }}</p>
+                        <p><b>Designation: </b>{{ x.T_Designation }}</p>
+                        <p><b>Email: </b>{{ x.T_Email }}</p>
+                    </div>
+                </div>
+
+                <div class="col-sm-5 left_display">
+                    <div>
+                        <p><b>Supervising Series: </b>{{ x.T_Sup_Series }}</p>
+                        <p><b>Supervising Section: </b>{{ x.T_Sup_Section }}</p>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            {% endif %}
+            {% endfor %}
+
+            {% for x in T_Details %}
+            {% if x.T_is_active is True and x.T_Designation == "Associate Professor" %}
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-6 left_display">
+                    <div>
+                        <p><b>Name: </b>{{ x.T_Full_Name }}</p>
+                        <p><b>Designation: </b>{{ x.T_Designation }}</p>
+                        <p><b>Email: </b>{{ x.T_Email }}</p>
+                    </div>
+                </div>
+
+                <div class="col-sm-5 left_display">
+                    <div>
+                        <p><b>Supervising Series: </b>{{ x.T_Sup_Series }}</p>
+                        <p><b>Supervising Section: </b>{{ x.T_Sup_Section }}</p>
                     </div>
                 </div>
             </div>
 
+            <hr>
+            {% endif %}
+            {% endfor %}
+
+            {% for x in T_Details %}
+            {% if x.T_is_active is True and x.T_Designation == "Assistant Professor" %}
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-6 left_display">
+                    <div>
+                        <p><b>Name: </b>{{ x.T_Full_Name }}</p>
+                        <p><b>Designation: </b>{{ x.T_Designation }}</p>
+                        <p><b>Email: </b>{{ x.T_Email }}</p>
+                    </div>
+                </div>
+
+                <div class="col-sm-5 left_display">
+                    <div>
+                        <p><b>Supervising Series: </b>{{ x.T_Sup_Series }}</p>
+                        <p><b>Supervising Section: </b>{{ x.T_Sup_Section }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+            {% endif %}
+            {% endfor %}
+
+            {% for x in T_Details %}
+            {% if x.T_is_active is True and x.T_Designation == "Lecterur" %}
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-6 left_display">
+                    <div>
+                        <p><b>Name: </b>{{ x.T_Full_Name }}</p>
+                        <p><b>Designation: </b>{{ x.T_Designation }}</p>
+                        <p><b>Email: </b>{{ x.T_Email }}</p>
+                    </div>
+                </div>
+
+                <div class="col-sm-5 left_display">
+                    <div>
+                        <p><b>Supervising Series: </b>{{ x.T_Sup_Series }}</p>
+                        <p><b>Supervising Section: </b>{{ x.T_Sup_Section }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
             {% endif %}
             {% endfor %}
 

@@ -51,7 +51,7 @@
                         <div>
                             <input type="checkbox" value="{{ x.S_Roll }}" name="Rolls" onclick="ncount()">
                             <label>
-                                <p><b>Roll No: </b>{{ x.S_Roll }} {{ y.username }}</p>
+                                <p><b>Roll No: </b>{{ x.S_Roll }}</p>
                             </label>
                         </div>
                     </div>
@@ -59,10 +59,12 @@
                     <div class="col-sm-7 left_display">
                         <div>
                             <p><b>Full Name: </b>{{ x.S_Full_Name }}</p>
+                            <p><b>Email: </b>{{ x.S_Email }}</p>
                         </div>
                     </div>
                 </div>
 
+                <br>
                 {% endif %}
                 {% endfor %}
 

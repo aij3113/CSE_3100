@@ -13,8 +13,8 @@
 
             </div>
             <ul class="nav navbar-nav">
-                <li><a href="{% url 'Admin_Home' %}" class="active">Students</a></li>
-                <li><a href="{% url 'Admin_Tec' %}">Teachers</a></li>
+                <li><a href="{% url 'Admin_Home' %}">Teachers</a></li>
+                <li><a href="{% url 'Admin_Stu' %}" class="active">Students</a></li>
                 <li><a href="{% url 'Admin_Crs' %}">Courses</a></li>
                 <li><a href="{% url 'CR_Home' %}">Logout</a></li>
             </ul>
@@ -27,7 +27,7 @@
     <div class="block">
         <nav class="navbar">
             <ul class="nav navbar-nav center_display">
-                <li><a href="{% url 'Admin_Home' %}">All Students</a></li>
+                <li><a href="{% url 'Admin_Stu' %}">All Students</a></li>
                 <li><a href="{% url 'Admin_Stu_Req' %}">Pending Requests</a></li>
                 <li><a href="{% url 'Admin_Stu_Edit' %}" class="active">Edit Student</a></li>
             </ul>
@@ -63,6 +63,7 @@
                         <div>
                             <label>
                                 <p><b>Full Name: </b> {{ x.S_Full_Name }} </p>
+                                <p><b>Email: </b> {{ x.S_Email }} </p>
                             </label><br>
                         </div>
                     </div>
@@ -95,6 +96,7 @@
                 <div style="display: none;">
                     <input type="checkbox" value="{{ Admin.T_Email }}" name="admin_id" checked > 
                 </div>
+                <br>
                 <br>
 
                 <div class="row">

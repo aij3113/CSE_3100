@@ -13,8 +13,8 @@
 
             </div>
             <ul class="nav navbar-nav">
-                <li><a href="{% url 'Admin_Home' %}">Students</a></li>
-                <li><a href="{% url 'Admin_Tec' %}">Teachers</a></li>
+                <li><a href="{% url 'Admin_Home' %}">Teachers</a></li>
+                <li><a href="{% url 'Admin_Stu' %}">Students</a></li>
                 <li><a href="{% url 'Admin_Crs' %}" class="active">Courses</a></li>
                 <li><a href="{% url 'CR_Home' %}">Logout</a></li>
             </ul>
@@ -45,29 +45,19 @@
                 <div class="block-log">
 
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-7">
                             <label for="C_Code">Course_Code</label><br>
                             <input type="text" name="C_Code" placeholder="C_Code" required><br><br>
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-sm-12">
                             <label for="C_Title">Course_Title</label><br>
                             <input type="text" name="C_Title" placeholder="C_Title" required><br><br>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-12">
+                            
                             <label for="C_Credit">Course_Credit</label><br>
                             <input type="number" name="C_Credit" placeholder="0.00" step="0.01" required><br><br>
                         </div>
-                    </div>
 
-
-                    <div class="row">
-                        <div class="col-sm-12">
+                        
+                        <div class="col-sm-5">
                             <label for="Year">Year</label><br>
                             <select id="Year" name="Year" onchange="GetSelectedValue();" required>
                             {% for y in Y_Details %}
@@ -78,18 +68,19 @@
                                 {% endif %}
                             {% endfor %}
                             </select><br><br>
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-sm-12">
                             <label for="Semester">Semester</label><br>
                             <select id="Semester" name="Semester" required>
                                 <option value="NA" selected disabled>---</option>
+                            </select><br><br>
+
+                            <label for="C_OP">Optional</label><br>
+                            <select id="C_O" name="C_O" required>
+                                <option value="False" selected>False</option>
+                                <option value="True">True</option>
                             </select><br>
                         </div>
                     </div>
-
 
 
                 </div>
